@@ -1,0 +1,42 @@
+# === Archivos compilados de Java ===
+*.class
+
+# === Archivos y carpetas de NetBeans ===
+nbproject/private/
+nbbuild/
+nbdist/
+build/
+dist/
+
+# === Archivos de configuración de IDEs ===
+.idea/
+.vscode/
+*.iml
+
+# === Archivos temporales y de sistema ===
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# === Dependencias descargadas ===
+lib/
+
+# === Archivos generados de empaquetado ===
+*.jar
+*.war
+*.ear
+
+# === Maven ===
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
