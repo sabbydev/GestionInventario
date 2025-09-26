@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Autorepuestos Perú</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <img src="img/logo.png" alt="Logo Autorepuestos Perú">
+                <h2>Autorepuestos Perú</h2>
+                <p>Gestión de inventario rápido y seguro</p>
+            </div>
+
+            <!-- Formulario de login -->
+            <form action="LoginServlet" method="post" class="login-form">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+
+                <button type="submit">Ingresar</button>
+            </form>
+
+            <!-- Mensaje de error (oculto por defecto) -->
+            <p id="errorMsg" style="color:red; text-align:center; margin-top:10px; display:none;">
+                ❌ Usuario o contraseña incorrectos
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar mensaje de error si existe ?error=true en la URL
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("error") === "true") {
+            document.getElementById("errorMsg").style.display = "block";
+        }
+    </script>
+</body>
+</html>
