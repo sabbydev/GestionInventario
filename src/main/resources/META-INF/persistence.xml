@@ -3,5 +3,5 @@
     <!-- Define Persistence Unit -->
     <persistence-unit name="my_persistence_unit">
         
-    </persistence-unit>
+  </persistence-unit>
 </persistence>
