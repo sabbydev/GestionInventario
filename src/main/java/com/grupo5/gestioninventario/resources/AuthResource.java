@@ -21,53 +21,47 @@ public class AuthResource {
     private final AuthService authService;
 
     public AuthResource() {
-        // IMPORTANTE: AuthService requiere un repositorio
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("invPU");
         this.authService = new AuthService(new JpaUsuarioRepository(emf));
     }
 
     public static class Credenciales {
-        public String username;
+        public String correo;    // ← ahora correo
         public String password;
     }
-
     public static class ErrorMsg {
         public String mensaje;
         public ErrorMsg() {}
-        public ErrorMsg(String m) { this.mensaje = m; }
+        public ErrorMsg(String m){ this.mensaje = m; }
     }
-
     public static class UserView {
         public Integer id;
-        public String username;
+        public String nombre;
+        public String correo;
         public String rol;
         public boolean estado;
 
-        public UserView(Usuario u) {
+        public UserView(Usuario u){
             this.id = u.getId();
-            this.username = u.getUsername();
-            this.rol = (u.getRol() != null ? u.getRol().getNombre() : null);
-            // Si tu campo es boolean:
+            this.nombre = u.getNombre();   // ← mostramos nombre
+            this.correo = u.getCorreo();   // ← y correo
+            this.rol = (u.getRol()!=null ? u.getRol().getNombre() : null);
             this.estado = u.isEstado();
-            // Si en tu modelo "estado" fuera Integer (1/0), usa esto en lugar de la línea anterior:
-            // this.estado = (u.getEstado() != null && u.getEstado() == 1);
         }
     }
 
-    @POST
-    @Path("/login")
-    public Response login(Credenciales c) {
-        if (c == null || c.username == null || c.password == null) {
-            return Response.status(400).entity(new ErrorMsg("username y password son obligatorios")).build();
+    @POST @Path("/login")
+    public Response login(Credenciales c){
+        if (c==null || c.correo==null || c.password==null) {
+            return Response.status(400).entity(new ErrorMsg("correo y password son obligatorios")).build();
         }
-
-        Usuario u = authService.login(c.username, c.password);
+        Usuario u = authService.login(c.correo, c.password);
         if (u == null) {
             return Response.status(401).entity(new ErrorMsg("Usuario o contraseña incorrectos")).build();
         }
-
         return Response.ok(new UserView(u)).build();
     }
 }
+
 
 

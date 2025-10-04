@@ -8,5 +8,6 @@ package com.grupo5.gestioninventario.repositorio;
 import com.grupo5.gestioninventario.modelo.Usuario;
 
 public interface UsuarioRepository extends IRepository<Usuario, Integer> {
-    Usuario findByUsernameAndPassword(String username, String password);
+    // ahora autenticamos por correo
+    Usuario findByCorreoAndPassword(String correo, String password);
 }

@@ -7,10 +7,7 @@ package com.grupo5.gestioninventario.repositorio.jpa;
 
 import com.grupo5.gestioninventario.modelo.Usuario;
 import com.grupo5.gestioninventario.repositorio.UsuarioRepository;
-import com.grupo5.gestioninventario.repositorio.UsuarioRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,17 +53,15 @@ public class JpaUsuarioRepository implements UsuarioRepository {
     @Override
     public Optional<Usuario> findById(Integer id) {
         EntityManager em = emf.createEntityManager();
-        Usuario u = em.find(Usuario.class, id);
-        em.close();
-        return Optional.ofNullable(u);
+        try { return Optional.ofNullable(em.find(Usuario.class, id)); }
+        finally { em.close(); }
     }
 
     @Override
     public List<Usuario> findAll() {
         EntityManager em = emf.createEntityManager();
-        List<Usuario> list = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
-        em.close();
-        return list;
+        try { return em.createQuery("select u from Usuario u", Usuario.class).getResultList(); }
+        finally { em.close(); }
     }
 
     @Override
@@ -75,18 +70,18 @@ public class JpaUsuarioRepository implements UsuarioRepository {
     }
 
     @Override
-    public Usuario findByUsernameAndPassword(String username, String password) {
+    public Usuario findByCorreoAndPassword(String correo, String password) {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT u FROM Usuario u WHERE u.username = :user AND u.password = :pass", Usuario.class)
-                     .setParameter("user", username)
-                     .setParameter("pass", password)
-                     .getSingleResult();
+            return em.createQuery(
+                    "select u from Usuario u where u.correo=:c and u.password=:p",
+                    Usuario.class)
+                .setParameter("c", correo)
+                .setParameter("p", password)
+                .getSingleResult();
         } catch (NoResultException e) {
             return null;
-        } finally {
-            em.close();
-        }
+        } finally { em.close(); }
     }
 }
 

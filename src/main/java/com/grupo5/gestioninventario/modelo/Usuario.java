@@ -1,57 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-/*
- * Clase que representa la entidad Usuario mapeada a la tabla "usuarios"
- * en la base de datos MySQL mediante JPA / Hibernate.
- */
 package com.grupo5.gestioninventario.modelo;
 
-import jakarta.persistence.*;  // ✅ Importa las anotaciones necesarias de JPA
+import jakarta.persistence.*;
 
-// ✅ Marca la clase como una entidad JPA
 @Entity
-// ✅ Indica el nombre de la tabla en la base de datos
 @Table(name = "usuarios")
 public class Usuario {
 
-    // ✅ Clave primaria autogenerada
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // usa AUTO_INCREMENT en MySQL
-    @Column(name = "id_usuario") // nombre de la columna en la BD
-    private Integer id;  // REVISAR
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
+    private Integer id;
 
-    // ✅ Campo para el login (correo o usuario)
-    @Column(name = "username", nullable = false, unique = true, length = 50)
-    private String username; 
-    // 🔹 CAMBIO: antes era "email", ahora es "username" para autenticación
+    @Column(name = "nombre", nullable = false, length = 100)
+    private String nombre;
 
-    // ✅ Campo de contraseña (se recomienda cifrar)
+    @Column(name = "correo", nullable = false, unique = true, length = 100)
+    private String correo;
+
     @Column(name = "user_password", nullable = false, length = 255)
-    private String password; 
-    // 🔹 CAMBIO: el nombre coincide con la BD: "user_password"
+    private String password;
 
-    // ✅ Campo booleano que indica si el usuario está activo
     @Column(name = "estado")
     private boolean estado;
 
-    // ✅ Relación muchos-a-uno con la tabla roles (FK id_rol)
     @ManyToOne
-    @JoinColumn(name = "id_rol", nullable = false) // crea la FK
-    private Rol rol; 
-    // 🔹 CAMBIO: antes no existía la relación, ahora se añade para manejar roles
+    @JoinColumn(name = "id_rol", nullable = false)
+    private Rol rol;
 
-    // 🔹 Constructor vacío obligatorio para JPA
-    public Usuario() {}
-
-    // ✅ Getters y Setters: necesarios para acceder a los campos desde Hibernate y controladores
-
+    // Getters y Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
@@ -62,3 +46,4 @@ public class Usuario {
     public Rol getRol() { return rol; }
     public void setRol(Rol rol) { this.rol = rol; }
 }
+

@@ -16,17 +16,14 @@ public class AuthService {
         this.usuarioRepo = usuarioRepo;
     }
 
-    public Usuario login(String username, String password) {
-        Usuario u = usuarioRepo.findByUsernameAndPassword(username, password);
-        // Si tu campo "estado" es boolean:
-        if (u != null && u.isEstado()) return u;
-
-        // Si fuera Integer (1/0), usa esta condición en su lugar:
-        // if (u != null && u.getEstado() != null && u.getEstado() == 1) return u;
-
+    // ahora el login es por correo
+    public Usuario login(String correo, String password) {
+        Usuario u = usuarioRepo.findByCorreoAndPassword(correo, password);
+        if (u != null && u.isEstado()) return u;  // activo = true
         return null;
     }
 }
+
 
 
 
