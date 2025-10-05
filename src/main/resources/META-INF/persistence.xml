@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
     <!-- Define Persistence Unit -->
-    <persistence-unit name="my_persistence_unit">
-        
+    <persistence-unit name="my_persistence_unit" transaction-type="RESOURCE_LOCAL">
+        <!-- Detecta automáticamente si esta anotado como @Entity -->
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/inventario_automotriz?useSSL=false&amp;serverTimezone=UTC"/>
+            <property name="jakarta.persistence.jdbc.user" value="inventario_automotriz"/>
+            <property name="jakarta.persistence.jdbc.password" value="inventario"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
+            <property name="jakarta.persistence.sql-load-script-source" value="META-INF/load.sql"/>
+        </properties>
     </persistence-unit>
 </persistence>
