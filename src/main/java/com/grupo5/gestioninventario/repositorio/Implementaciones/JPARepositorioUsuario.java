@@ -1,22 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package com.grupo5.gestioninventario.repositorio.Implementaciones;
 
-package com.grupo5.gestioninventario.repositorio.jpa;
-
-import com.grupo5.gestioninventario.modelo.Usuario;
-import com.grupo5.gestioninventario.repositorio.UsuarioRepository;
 import jakarta.persistence.*;
-
+import com.grupo5.gestioninventario.modelo.Usuario;
 import java.util.List;
 import java.util.Optional;
+import com.grupo5.gestioninventario.repositorio.IRepositorioUsuario;
 
-public class JpaUsuarioRepository implements UsuarioRepository {
+public class JPARepositorioUsuario implements IRepositorioUsuario {
 
     private final EntityManagerFactory emf;
 
-    public JpaUsuarioRepository(EntityManagerFactory emf) {
+    public JPARepositorioUsuario(EntityManagerFactory emf) {
         this.emf = emf;
     }
 
@@ -70,14 +64,14 @@ public class JpaUsuarioRepository implements UsuarioRepository {
     }
 
     @Override
-    public Usuario findByCorreoAndPassword(String correo, String password) {
+    public Usuario findByCorreoAndContraseña(String correo, String contraseña) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.createQuery(
-                    "select u from Usuario u where u.correo=:c and u.password=:p",
+                    "select u from Usuario u where u.correo=:correo and u.contraseña=:contraseña",
                     Usuario.class)
-                .setParameter("c", correo)
-                .setParameter("p", password)
+                .setParameter("correo", correo)
+                .setParameter("contraseña", contraseña)
                 .getSingleResult();
         } catch (NoResultException e) {
             return null;

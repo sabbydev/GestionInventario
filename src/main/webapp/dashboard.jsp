@@ -3,7 +3,7 @@
 <%
     // Obtener el usuario almacenado en sesión (desde LoginServlet)
     com.grupo5.gestioninventario.modelo.Usuario usuario = 
-        (com.grupo5.gestioninventario.modelo.Usuario) session.getAttribute("usuarioLogueado");
+        (com.grupo5.gestioninventario.modelo.Usuario) session.getAttribute("usuario");
 
     // Si no hay usuario logueado, redirigir al login
     if (usuario == null) {
@@ -47,7 +47,7 @@
                 <i class="fa fa-bars"></i>
             </button>
             <!-- Mostramos el nombre del usuario desde la sesión -->
-            <h1>Bienvenido, <%= usuario.getUsername() %></h1>
+            <h1>Bienvenido, <%= usuario.getNombre() %></h1>
             <div class="datetime">
                 <i class="fa fa-clock"></i> <span id="hora"></span>
                 <i class="fa fa-calendar"></i> <span id="fecha"></span>
