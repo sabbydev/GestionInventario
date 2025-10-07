@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio | Autorepuestos Perú</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/inicio.css">
+    <title>Dashboard | Autorepuestos Perú</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
@@ -16,7 +16,7 @@
         <h2>Autorepuestos</h2>
         <nav>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fa fa-home"></i> Inicio</a></li>   
+                <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>   
                 <li><a href="${pageContext.request.contextPath}/inventario"><i class="fa fa-box"></i> Inventario</a></li>
                 <li><a href="${pageContext.request.contextPath}/proveedores"><i class="fa fa-truck"></i> Proveedores</a></li>
                 <li><a href="${pageContext.request.contextPath}/categorias"><i class="fa fa-tags"></i> Categorías</a></li>
@@ -68,6 +68,6 @@
         </section>
     </main>
 
-    <script src="${pageContext.request.contextPath}/js/inicio.js"></script>
+    <script src="${pageContext.request.contextPath}/js/fechaHora.js"></script>
 </body>
 </html>

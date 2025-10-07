@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         if (usuario != null) {
             HttpSession session = request.getSession();
             session.setAttribute("usuario", usuario);
-            response.sendRedirect(request.getContextPath() + "/inicio");
+            response.sendRedirect(request.getContextPath() + "/dashboard");
         } else {
             // Redirigir al servlet que sirve la vista de login, con parámetro de error
             response.sendRedirect(request.getContextPath() + "/login?error=true");

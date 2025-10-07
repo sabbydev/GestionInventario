@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/inicio")
-public class InicioServlet extends HttpServlet {
+@WebServlet("/dashboard")
+public class DashboardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,6 +27,6 @@ public class InicioServlet extends HttpServlet {
 
         request.setAttribute("usuario", usuario);
 
-        request.getRequestDispatcher("/WEB-INF/vista/inicio.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/vista/dashboard.jsp").forward(request, response);
     }
 }

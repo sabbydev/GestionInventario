@@ -1,4 +1,4 @@
-package com.grupo5.gestioninventario.servlet.vista;
+package com.grupo5.gestioninventario.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
