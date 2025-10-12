@@ -1,0 +1,134 @@
+/* === empresa.css === */
+
+/* === Encabezado anaranjado superior === */
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0ad4e; /* 🔸 color corporativo anaranjado */
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    margin: 0 0 25px 0; /* 🔧 sin margen lateral, pegado al sidebar */
+}
+
+.header-main h1 {
+    font-size: 1.6em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.header-main .datetime {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.header-main i {
+    margin-right: 5px;
+}
+
+/* === Contenedor del formulario === */
+.form-container {
+    background: #fff;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.form-container:hover {
+    transform: translateY(-2px);
+}
+
+/* === Formulario de empresa === */
+.form-empresa {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    color: #043d3c;
+    margin-bottom: 0.4rem;
+}
+
+input,
+textarea {
+    padding: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    color: #333;
+    font-size: 0.95rem;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #f0ad4e;
+    background-color: #fff;
+    outline: none;
+}
+
+/* === Solo lectura === */
+input[readonly],
+textarea[readonly] {
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+/* === Botón Editar === */
+.btn-editar {
+    background: #17a2b8;
+    border: none;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    align-self: flex-start;
+}
+
+.btn-editar:hover {
+    background: #138496;
+    transform: scale(1.05);
+}
+
+/* === Responsivo === */
+@media (max-width: 768px) {
+    .header-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        text-align: left;
+    }
+
+    .form-container {
+        padding: 1.5rem;
+        margin: 0 10px;
+        width: auto;
+    }
+
+    .form-empresa input,
+    .form-empresa textarea {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+
+
+
