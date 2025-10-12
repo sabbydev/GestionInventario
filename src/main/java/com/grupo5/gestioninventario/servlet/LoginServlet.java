@@ -13,9 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-
+    
     private ServicioAutenticacion servicioAutenticacion;
 
     @Override
@@ -24,10 +24,18 @@ public class LoginServlet extends HttpServlet {
         this.servicioAutenticacion = new ServicioAutenticacion(new JPARepositorioUsuario(emf));
     }
 
+    // Mostrar formulario de login
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/vista/login.jsp").forward(request, response);
+    }
+
+    // Procesar autenticación
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String correo = request.getParameter("correo");
         String password = request.getParameter("password");
 
@@ -38,7 +46,6 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("usuario", usuario);
             response.sendRedirect(request.getContextPath() + "/dashboard");
         } else {
-            // Redirigir al servlet que sirve la vista de login, con parámetro de error
             response.sendRedirect(request.getContextPath() + "/login?error=true");
         }
     }

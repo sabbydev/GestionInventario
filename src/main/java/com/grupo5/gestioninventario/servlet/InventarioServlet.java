@@ -26,7 +26,8 @@ public class InventarioServlet extends HttpServlet {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
         request.setAttribute("usuario", usuario);
+        request.setAttribute("vistaDinamica", "inventario");
 
-        request.getRequestDispatcher("/WEB-INF/vista/inventario.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
 }

@@ -18,7 +18,7 @@
             </div>
 
             <!-- Formulario de login -->
-            <form action="${pageContext.request.contextPath}/LoginServlet" method="post" class="login-form">
+            <form action="${pageContext.request.contextPath}/login" method="post" class="login-form">
                 <label for="correo">Correo electrónico</label>
                 <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
 

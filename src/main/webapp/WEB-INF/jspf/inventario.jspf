@@ -1,0 +1,51 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/inventario.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<section class="search-bar">
+    <form action="${pageContext.request.contextPath}/inventario" method="get">
+        <input type="text" name="query" placeholder="Buscar producto..." value="${param.query}" />
+        <button type="submit"><i class="fa fa-search"></i> Buscar</button>
+    </form>
+</section>
+
+<!-- Tabla de inventario -->
+<section class="inventory-table">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="producto" items="${productos}">
+                <tr>
+                    <td>${producto.id}</td>
+                    <td>${producto.nombre}</td>
+                    <td>${producto.categoria.nombre}</td>
+                    <td>${producto.proveedor.nombre}</td>
+                    <td>${producto.stock}</td>
+                    <td>S/. ${producto.precio}</td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/editarProducto?id=${producto.id}" class="edit"><i class="fa fa-edit"></i></a>
+                        <a href="${pageContext.request.contextPath}/eliminarProducto?id=${producto.id}" class="delete"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            </c:forEach>
+            <c:if test="${empty productos}">
+                <tr>
+                    <td colspan="7">No se encontraron productos.</td>
+                </tr>
+            </c:if>
+        </tbody>
+    </table>
+</section>

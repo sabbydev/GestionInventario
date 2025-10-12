@@ -22,11 +22,12 @@ public class DashboardServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
-
+        
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-
+        
         request.setAttribute("usuario", usuario);
-
-        request.getRequestDispatcher("/WEB-INF/vista/dashboard.jsp").forward(request, response);
+        request.setAttribute("vistaDinamica", "dashboard");
+        
+        request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
 }
