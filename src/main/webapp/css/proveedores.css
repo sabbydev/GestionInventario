@@ -1,0 +1,158 @@
+/* === proveedores.css === */
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #f0ad4e; 
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 25px;
+}
+
+.header-main h1 {
+    font-size: 1.6em;
+    font-weight: 700;
+}
+
+.header-main .datetime {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.header-main i {
+    margin-right: 5px;
+}
+
+/* === Toolbar (botón + buscador ) === */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+/* === Botón Nuevo Proveedor === */
+.btn-nuevo {
+    background-color: #007bff;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-nuevo:hover {
+    background-color: #0056b3;
+}
+
+/* === Campo de búsqueda === */
+.buscador {
+    width: 250px; 
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95em;
+    transition: border-color 0.3s;
+}
+
+.buscador:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* === Tabla de proveedores === */
+.tabla-proveedores {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.tabla-proveedores thead {
+    background: #f6f8fa;
+    text-align: left;
+    color: #333;
+}
+
+.tabla-proveedores th,
+.tabla-proveedores td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e6ea;
+}
+
+.tabla-proveedores tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* === Botones de acción === */
+.acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-editar,
+.btn-eliminar {
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s;
+}
+
+.btn-editar {
+    background-color: #17a2b8;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+}
+
+.btn-editar:hover {
+    background-color: #138496;
+    transform: scale(1.05);
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* === Responsivo === */
+@media (max-width: 768px) {
+    .header-main {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .buscador {
+        width: 100%;
+    }
+
+    .tabla-proveedores th,
+    .tabla-proveedores td {
+        padding: 10px 8px;
+        font-size: 0.9em;
+    }
+}
+
+
+

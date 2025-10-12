@@ -1,11 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page session="true" %> <!-- habilita el uso de sesión -->
+<%@ page session="true" %>
 <%
-    // Obtener el usuario almacenado en sesión (desde LoginServlet)
     com.grupo5.gestioninventario.modelo.Usuario usuario = 
         (com.grupo5.gestioninventario.modelo.Usuario) session.getAttribute("usuario");
-
-    // Si no hay usuario logueado, redirigir al login
     if (usuario == null) {
         response.sendRedirect("login.html?error=sesion");
         return;
@@ -19,9 +16,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Autorepuestos Perú</title>
     <link rel="stylesheet" href="css/dashboard.css">
-    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
+
 <body>
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -31,9 +28,22 @@
                 <li><a href="dashboard.jsp"><i class="fa fa-home"></i> Inicio</a></li>   
                 <li><a href="inventario.jsp"><i class="fa fa-box"></i> Inventario</a></li>
                 <li><a href="proveedores.jsp"><i class="fa fa-truck"></i> Proveedores</a></li>
-                <li><a href="categorias.jsp"><i class="fa fa-tags"></i> Categorí­as</a></li>
+
+                <!-- 🧾 NUEVA OPCIÓN: Movimientos -->
+                <li><a href="movimientos.jsp"><i class="fa fa-exchange-alt"></i> Movimientos</a></li>
+
+                <li><a href="categorias.jsp"><i class="fa fa-tags"></i> Categorías</a></li>
                 <li><a href="reportes.jsp"><i class="fa fa-chart-bar"></i> Reportes</a></li>
-                <li><a href="admin.jsp"><i class="fa fa-cogs"></i> Administración</a></li>
+
+                <!-- 🔽 CONFIGURACIÓN con submenú -->
+                <li class="submenu">
+                    <a href="#"><i class="fa fa-cogs"></i> Configuración</a>
+                    <ul class="submenu-content">
+                        <li><a href="empresa"><i class="fa fa-building"></i> Empresa</a></li>
+                        <li><a href="usuarios"><i class="fa fa-users"></i> Usuarios</a></li>
+                    </ul>
+                </li>
+
                 <li><a href="LogoutServlet"><i class="fa fa-sign-out-alt"></i> Cerrar sesión</a></li>
             </ul>
         </nav>
@@ -41,12 +51,10 @@
 
     <!-- Contenido principal -->
     <main class="content">
-        <!-- Encabezado superior -->
         <header class="header-main">
             <button class="menu-toggle" id="menu-toggle">
                 <i class="fa fa-bars"></i>
             </button>
-            <!-- Mostramos el nombre del usuario desde la sesión -->
             <h1>Bienvenido, <%= usuario.getNombre() %></h1>
             <div class="datetime">
                 <i class="fa fa-clock"></i> <span id="hora"></span>
@@ -54,7 +62,7 @@
             </div>
         </header>
 
-        <!-- Tarjetas de acceso rápido -->
+        <!-- Tarjetas -->
         <section class="cards">
             <a href="inventario.jsp" class="card">
                 <i class="fa fa-box"></i>
@@ -66,22 +74,27 @@
                 <h3>Proveedores</h3>
                 <p>Ir a proveedores ></p>
             </a>
+            <a href="movimientos.jsp" class="card">
+                <i class="fa fa-exchange-alt"></i>
+                <h3>Movimientos</h3>
+                <p>Ir a movimientos ></p>
+            </a>
             <a href="categorias.jsp" class="card">
                 <i class="fa fa-tags"></i>
-                <h3>Categorí­as</h3>
-                <p>Ir a categorí­as ></p>
+                <h3>Categorías</h3>
+                <p>Ir a categorías ></p>
             </a>
         </section>
 
-        <!-- Sección de alertas -->
+        <!-- Alertas -->
         <section class="alerts">
             <h2>Alertas de Inventario</h2>
             <p>No hay alertas por el momento.</p>
         </section>
     </main>
 
-    <!-- Script fecha y hora -->
     <script>
+        // Fecha y hora
         function actualizarFechaHora() {
             const fecha = new Date();
             document.getElementById("fecha").textContent = fecha.toLocaleDateString("es-PE", {
@@ -92,7 +105,7 @@
         setInterval(actualizarFechaHora, 1000);
         actualizarFechaHora();
 
-        // Toggle sidebar en móviles
+        // Sidebar en móviles
         document.getElementById("menu-toggle").addEventListener("click", function () {
             document.querySelector(".sidebar").classList.toggle("active");
         });
