@@ -1,0 +1,49 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 11 oct. 2025, 21:53:23
+    Author     : Sebastian
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #485563, #56A0C9, #62BCAD);
+  color: #fff;
+}
+
+#sidebar {
+    width: 240px;
+    height: 100vh;
+}
+
+#dynamic-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: calc(100% - 240px);
+}
+
+#header {
+    background-color: green;
+    height: 75px;;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+#main {
+    flex: 1;
+    padding: 20px;
+    color: black;
+}

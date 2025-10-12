@@ -1,0 +1,47 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 11 oct. 2025, 22:06:00
+    Author     : Sebastian
+*/
+
+.header {
+  background: #f0ad4e;
+  width: 100%;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.header span {
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+/* Botón hamburguesa */
+.burger-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .burger-menu-toggle {
+    display: block;
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
