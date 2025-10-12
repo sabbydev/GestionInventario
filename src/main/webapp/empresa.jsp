@@ -70,7 +70,7 @@
 
                 <div class="form-group">
                     <label for="direccion">Dirección:</label>
-                    <textarea id="direccion" rows="2" readonly>Av. Los Olivos 123 - Lima</textarea>
+                    <textarea id="direccion" rows="2" readonly>Av. la Paz - Lima - Peru</textarea>
                 </div>
 
                 <div class="form-group">
@@ -85,7 +85,7 @@
 
                 <div class="form-group">
                     <label for="representante">Representante Legal:</label>
-                    <input type="text" id="representante" value="Carlos Méndez" readonly>
+                    <input type="text" id="representante" value="Autorepuestos Perú SAC" readonly>
                 </div>
 
                 <div class="form-group botones">
@@ -95,8 +95,9 @@
         </section>
     </main>
 
+    <!-- Scripts -->
     <script>
-        // reloj simple
+        // Reloj
         function actualizarFechaHora() {
             const fecha = new Date();
             document.getElementById("fecha").textContent = fecha.toLocaleDateString("es-PE", { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -105,14 +106,34 @@
         setInterval(actualizarFechaHora, 1000);
         actualizarFechaHora();
 
-        // toggle sidebar
+        // Toggle Sidebar
         const toggle = document.getElementById("menu-toggle");
         toggle.addEventListener("click", () => {
             document.querySelector(".sidebar").classList.toggle("active");
         });
+
+        // Habilitar edición de los campos
+        document.querySelector(".btn-editar").addEventListener("click", function () {
+            const inputs = document.querySelectorAll(".form-empresa input, .form-empresa textarea");
+            const isEditing = this.classList.toggle("editing");
+
+            if (isEditing) {
+                inputs.forEach(el => el.removeAttribute("readonly"));
+                this.innerHTML = '<i class="fa fa-save"></i> Guardar Cambios';
+                this.style.backgroundColor = "#28a745"; // verde
+            } else {
+                inputs.forEach(el => el.setAttribute("readonly", true));
+                this.innerHTML = '<i class="fa fa-pen"></i> Editar Información';
+                this.style.backgroundColor = "#007bff"; // azul
+                alert("Los cambios han sido guardados correctamente.");
+            }
+        });
     </script>
 </body>
 </html>
+
+
+
 
 
 
