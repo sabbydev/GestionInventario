@@ -1,0 +1,23 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<header class="header">
+    <button class="burger-menu-toggle">
+        <i class="fa fa-bars"></i>
+    </button>
+    <c:if test="${not empty usuario}">
+        <h1>Bienvenido, ${usuario.nombre}</h1>
+    </c:if>
+    <c:if test="${empty usuario}">
+        <h1>Bienvenido, invitado</h1>
+    </c:if>
+    <div class="datetime">
+        <i class="fa fa-clock"></i> <span id="hora"></span>
+        <i class="fa fa-calendar"></i> <span id="fecha"></span>
+    </div>
+</header>
+<script src="${pageContext.request.contextPath}/js/header.js" defer></script>
