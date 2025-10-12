@@ -16,8 +16,3 @@ public class ServicioAutenticacion {
         return (usuario != null && usuario.isEstado()) ? usuario : null;
     }
 }
-
-
-
-
-

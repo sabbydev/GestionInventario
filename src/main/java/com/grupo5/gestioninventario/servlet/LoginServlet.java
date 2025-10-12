@@ -10,38 +10,43 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-
+    
     private ServicioAutenticacion servicioAutenticacion;
 
     @Override
     public void init() throws ServletException {
-        // Contruir EntityManagerFactory en base a la configuración en Persistence.xml
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-        // Inicialización del servicio de autenticación
         this.servicioAutenticacion = new ServicioAutenticacion(new JPARepositorioUsuario(emf));
     }
 
+    // Mostrar formulario de login
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/vista/login.jsp").forward(request, response);
+    }
+
+    // Procesar autenticación
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // Almacena datos enviados por el cliente
         String correo = request.getParameter("correo");
         String password = request.getParameter("password");
 
         Usuario usuario = servicioAutenticacion.autenticar(correo, password);
 
         if (usuario != null) {
-            request.getSession().setAttribute("usuario", usuario);
-            response.sendRedirect("dashboard.jsp");
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", usuario);
+            response.sendRedirect(request.getContextPath() + "/dashboard");
         } else {
-            response.sendRedirect("login.html?error=true");
+            response.sendRedirect(request.getContextPath() + "/login?error=true");
         }
     }
 }
-
-
