@@ -1,0 +1,223 @@
+/* ============Reportes.css===================
+
+/* ===TARJETAS DE RESUMEN (ventas, compras, stock, usuarios) === */
+.summary-cards {
+    display: flex;                  
+    justify-content: space-between; 
+    flex-wrap: wrap;                
+    gap: 20px;                      
+    margin-top: 20px;
+}
+
+.card.resumen {
+    flex: 1 1 22%;                 
+    display: flex;
+    align-items: center;            
+    background: linear-gradient(135deg, #ffffff, #f6f8fa);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: #333;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card.resumen:hover {
+    transform: translateY(-4px);    
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.card.resumen i {
+    font-size: 36px;                
+    margin-right: 15px;
+    opacity: 0.8;
+}
+
+/* Colores por tipo de tarjeta */
+.ventas i { color: #28a745; }       
+.compras i { color: #007bff; }      
+.stock i { color: #f0ad4e; }        
+.usuarios i { color: #17a2b8; }     
+
+.card.resumen h3 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.card.resumen p {
+    margin: 2px 0 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* === BARRA DE HERRAMIENTAS (botones de acción) === */
+.report-toolbar {
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-accion {
+    background-color: #f0ad4e;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-accion:hover {
+    background-color: #d98b00;
+}
+
+/* ===CONTENEDOR PRINCIPAL DE GRÁFICOS === */
+.report-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 25px;
+    flex-wrap: nowrap;
+}
+
+.chart-box {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    flex: 1 1 48%;               
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chart-box canvas {
+    width: 100% !important;
+    max-width: 340px;               
+    height: 320px !important;      
+}
+
+.chart-box h2 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ===RESPONSIVIDAD DE LOS GRÁFICOS === */
+@media (max-width: 900px) {
+    .report-container {
+        flex-wrap: wrap;            
+        justify-content: center;
+    }
+
+    .chart-box {
+        flex: 1 1 100%;
+        max-width: 500px;
+    }
+
+    .chart-box canvas {
+        max-width: 350px;
+        height: auto !important;
+    }
+}
+
+
+/* === DETALLE DE INVENTARIO (tabla + gráfico lateral) === */
+.detalle-inventario {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 25px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.detalle-inventario .tabla {
+    flex: 1 1 60%;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.detalle-inventario .tabla h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detalle-inventario table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.detalle-inventario th {
+    background: #62BCAD;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+}
+
+.detalle-inventario td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.detalle-inventario tr:hover {
+    background-color: #f9f9f9;
+}
+
+.detalle-inventario .grafico {
+    flex: 1 1 35%;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.detalle-inventario .grafico h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.detalle-inventario .grafico canvas {
+    width: 100% !important;
+    max-width: 350px;          
+    height: 248px !important;     
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+/* === RESPONSIVIDAD DETALLE INVENTARIO === */
+@media (max-width: 900px) {
+    .detalle-inventario {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .detalle-inventario .tabla,
+    .detalle-inventario .grafico {
+        flex: 1 1 100%;
+        max-width: 500px;
+    }
+}
+

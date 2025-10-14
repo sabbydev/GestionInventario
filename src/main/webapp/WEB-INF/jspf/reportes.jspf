@@ -1,0 +1,64 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reportes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<section class="report-toolbar">
+    <label>Desde:</label>
+    <input type="date" id="fechaInicio">
+    <label>Hasta:</label>
+    <input type="date" id="fechaFin">
+    <label>Tipo:</label>
+    <select id="tipoMovimiento">
+        <option value="todos">Todos</option>
+        <option value="entrada">Entrada</option>
+        <option value="salida">Salida</option>
+    </select>
+    <button class="btn-accion"><i class="fa fa-refresh"></i> Actualizar</button>
+    <button class="btn-accion"><i class="fa fa-file-excel"></i> Exportar Excel</button>
+</section>
+
+<!-- Gráficos -->
+<section class="report-container">
+    <div class="chart-box">
+        <h2><i class="fa fa-chart-column"></i> Movimientos por Categoría</h2>
+        <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+        <h2><i class="fa fa-chart-pie"></i> Distribución de Inventario</h2>
+        <canvas id="pieChart"></canvas>
+    </div>
+</section>
+
+<!-- Nueva sección: Detalle de Inventario -->
+<section class="detalle-inventario">
+    <div class="tabla">
+        <h2><i class="fa fa-box"></i> Detalle de Inventario</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Batería 45Ah</td><td>Eléctrico</td><td>Panasonic</td><td>S/ 350.00</td><td>35</td></tr>
+                <tr><td>Filtro de aceite</td><td>Lubricantes</td><td>Shell</td><td>S/ 25.90</td><td>75</td></tr>
+                <tr><td>Llave inglesa</td><td>Herramientas</td><td>Bosch</td><td>S/ 99.90</td><td>12</td></tr>
+                <tr><td>Aceite sintético</td><td>Lubricantes</td><td>Castrol</td><td>S/ 120.00</td><td>54</td></tr>
+                <tr><td>Amortiguador</td><td>Suspensión</td><td>KYB</td><td>S/ 480.00</td><td>8</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="grafico">
+        <h2><i class="fa fa-chart-pie"></i> Productos con bajo stock</h2>
+        <canvas id="stockChart"></canvas>
+    </div>
+</section>
