@@ -1,0 +1,59 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/usuarios.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<section class="summary-actions">
+    <button class="btn-nuevo"><i class="fa fa-user-plus"></i> Nuevo Usuario</button>
+</section>
+<section class="tabla-container">
+    <table class="tabla-usuarios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Elvis Arqueros</td>
+                <td>admin@demo.local</td>
+                <td>Administrador</td>
+                <td><span class="estado activo">Activo</span></td>
+                <td class="acciones">
+                    <button class="btn-editar"><i class="fa fa-pen"></i></button>
+                    <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Liz</td>
+                <td>operador1@demo.local</td>
+                <td>Vendedor</td>
+                <td><span class="estado activo">Activo</span></td>
+                <td class="acciones">
+                    <button class="btn-editar"><i class="fa fa-pen"></i></button>
+                    <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Juan Carlos</td>
+                <td>gerente1@demo.local</td>
+                <td>Almacén</td>
+                <td><span class="estado inactivo">Inactivo</span></td>
+                <td class="acciones">
+                    <button class="btn-editar"><i class="fa fa-pen"></i></button>
+                    <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
