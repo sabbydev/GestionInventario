@@ -1,21 +1,15 @@
 package com.grupo5.gestioninventario.servlet;
 
-import com.grupo5.gestioninventario.modelo.Usuario;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet("/dashboard")
-public class DashboardServlet extends HttpServlet {
-
+@WebServlet("/usuarios")
+public class UsuariosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("usuario") == null) {
@@ -23,8 +17,16 @@ public class DashboardServlet extends HttpServlet {
             return;
         }
         
-        request.setAttribute("vistaDinamica", "dashboard");
+        request.setAttribute("vistaDinamica", "usuarios");
         
         request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
 }
+
+
+
+
+
+
+
+

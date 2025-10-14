@@ -14,15 +14,24 @@
       
   </c:when>
   <c:when test="${vistaDinamica eq 'reportes'}">
-      
+      <%@ include file="/WEB-INF/jspf/reportes.jspf" %>
   </c:when>
   <c:when test="${vistaDinamica eq 'administracion'}">
+      
+  </c:when>
+  <c:when test="${vistaDinamica eq 'configuracion'}">
+      
+  </c:when>
+  <c:when test="${vistaDinamica eq 'empresa'}">
+      <%@ include file="/WEB-INF/jspf/empresa.jspf" %>
+  </c:when>
+  <c:when test="${vistaDinamica eq 'usuarios'}">
+      <%@ include file="/WEB-INF/jspf/usuarios.jspf" %>
+  </c:when>
+  <c:when test="${vistaDinamica eq 'logout'}">
       
   </c:when>
   <c:otherwise>
       <h2>Página no encontrada</h2>
   </c:otherwise>
 </c:choose>
-
-
-
