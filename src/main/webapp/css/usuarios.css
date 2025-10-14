@@ -1,0 +1,180 @@
+/* === USUARIOS.CSS === */
+/* Mantiene coherencia visual con reportes.css */
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #485563, #56A0C9, #62BCAD);
+    margin: 0;
+    color: #333;
+}
+
+/* === ENCABEZADO PRINCIPAL === */
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0ad4e;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.header-main h1 {
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.header-main .datetime {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.header-main i {
+    color: #fff;
+}
+
+/* === BOTÓN NUEVO USUARIO === */
+.summary-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.btn-nuevo {
+    background: #043d3c;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-nuevo:hover {
+    background-color: #d98b00;
+    transform: translateY(-2px);
+}
+
+/* === TABLA DE USUARIOS === */
+.tabla-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.tabla-usuarios th {
+    background: #043d3c;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.tabla-usuarios td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.tabla-usuarios tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* === ESTADO (ACTIVO / INACTIVO) === */
+.estado {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85em;
+}
+
+.estado.activo {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.estado.inactivo {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* === BOTONES DE ACCIÓN === */
+.acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-editar, .btn-eliminar {
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    color: #fff;
+}
+
+.btn-editar {
+    background-color: #f0ad4e;
+}
+
+.btn-eliminar {
+    background-color: #d9534f;
+}
+
+.btn-editar:hover {
+    background-color: #d98b00;
+    transform: translateY(-2px);
+}
+
+.btn-eliminar:hover {
+    background-color: #b52b27;
+    transform: translateY(-2px);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+    .header-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .summary-actions {
+        justify-content: center;
+    }
+
+    .tabla-usuarios th, .tabla-usuarios td {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -14,8 +14,11 @@
             <li><a href="${pageContext.request.contextPath}/proveedores"><i class="fa fa-truck"></i> Proveedores</a></li>
             <li><a href="${pageContext.request.contextPath}/categorias"><i class="fa fa-tags"></i> Categorías</a></li>
             <li><a href="${pageContext.request.contextPath}/reportes"><i class="fa fa-chart-bar"></i> Reportes</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin"><i class="fa fa-cogs"></i> Administración</a></li>
-            <li><a href="${pageContext.request.contextPath}/LogoutServlet"><i class="fa fa-sign-out-alt"></i> Cerrar sesión</a></li>
+            <li><a href="${pageContext.request.contextPath}/administracion"><i class="fa fa-cogs"></i> Administración</a></li>
+            <li><a href="${pageContext.request.contextPath}/configuracion"><i class="fa fa-users"></i> Configuración</a></li>
+            <li><a href="${pageContext.request.contextPath}/empresa"><i class="fa fa-building"></i> Empresa</a></li>
+            <li><a href="${pageContext.request.contextPath}/usuarios"><i class="fa fa-users"></i> Usuarios</a></li>
+            <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out-alt"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
 </aside>

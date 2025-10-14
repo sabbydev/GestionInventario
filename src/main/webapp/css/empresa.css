@@ -1,0 +1,91 @@
+/* Contenedor principal */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0;
+}
+
+/* Formulario */
+.form-empresa {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 580px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+/* sin control de redimensionar */
+textarea {
+    resize: none;
+}
+
+/* Campos bloqueados (solo lectura) */
+input[readonly],
+textarea[readonly] {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    color: #333;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Cuando se habilite edición */
+input:enabled,
+textarea:enabled {
+    pointer-events: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+/* Botones */
+.form-group.botones {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btn-editar {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.3s ease;
+}
+
+.btn-editar:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
