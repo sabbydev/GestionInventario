@@ -12,6 +12,7 @@
             <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>   
             <li><a href="${pageContext.request.contextPath}/inventario"><i class="fa fa-box"></i> Inventario</a></li>
             <li><a href="${pageContext.request.contextPath}/proveedores"><i class="fa fa-truck"></i> Proveedores</a></li>
+            <li><a href="${pageContext.request.contextPath}/movimientos"><i class="fa fa-exchange-alt"></i> Movimientos</a></li>
             <li><a href="${pageContext.request.contextPath}/categorias"><i class="fa fa-tags"></i> Categorías</a></li>
             <li><a href="${pageContext.request.contextPath}/reportes"><i class="fa fa-chart-bar"></i> Reportes</a></li>
             <li><a href="${pageContext.request.contextPath}/administracion"><i class="fa fa-cogs"></i> Administración</a></li>
@@ -22,3 +23,4 @@
         </ul>
     </nav>
 </aside>
+<script src="${pageContext.request.contextPath}/js/header.js" defer></script>

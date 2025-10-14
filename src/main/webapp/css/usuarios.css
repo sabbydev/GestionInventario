@@ -1,13 +1,6 @@
 /* === USUARIOS.CSS === */
 /* Mantiene coherencia visual con reportes.css */
 
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #485563, #56A0C9, #62BCAD);
-    margin: 0;
-    color: #333;
-}
-
 /* === ENCABEZADO PRINCIPAL === */
 .header-main {
     display: flex;

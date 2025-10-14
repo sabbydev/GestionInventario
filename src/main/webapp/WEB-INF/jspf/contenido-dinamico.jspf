@@ -8,7 +8,10 @@
       <%@ include file="/WEB-INF/jspf/inventario.jspf" %>
   </c:when>
   <c:when test="${vistaDinamica eq 'proveedores'}">
-      
+      <%@ include file="/WEB-INF/jspf/proveedores.jspf" %>
+  </c:when>
+  <c:when test="${vistaDinamica eq 'movimientos'}">
+      <%@ include file="/WEB-INF/jspf/movimientos.jspf" %>
   </c:when>
   <c:when test="${vistaDinamica eq 'categorias'}">
       
