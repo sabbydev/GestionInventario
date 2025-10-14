@@ -10,7 +10,15 @@ public class ReportesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("reportes.jsp");
-        dispatcher.forward(request, response);
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("usuario") == null) {
+            response.sendRedirect(request.getContextPath() + "/login?error=sesion");
+            return;
+        }
+
+        request.setAttribute("vistaDinamica", "reportes");
+
+        request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
 }
