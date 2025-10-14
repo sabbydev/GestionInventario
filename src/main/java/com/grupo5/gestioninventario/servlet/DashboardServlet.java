@@ -23,9 +23,6 @@ public class DashboardServlet extends HttpServlet {
             return;
         }
         
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        
-        request.setAttribute("usuario", usuario);
         request.setAttribute("vistaDinamica", "dashboard");
         
         request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
