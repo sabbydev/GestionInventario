@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/inventario")
-public class InventarioServlet extends HttpServlet {
+@WebServlet("/categorias")
+public class CategoriasServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -22,7 +22,7 @@ public class InventarioServlet extends HttpServlet {
             return;
         }
 
-        request.setAttribute("vistaDinamica", "inventario");
+        request.setAttribute("vistaDinamica", "categorias");
 
         request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
