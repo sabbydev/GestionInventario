@@ -38,7 +38,21 @@
             <artifactId>jboss-logging</artifactId>
             <version>3.5.3.Final</version>
         </dependency>
+        
+        <!-- JSTL API Jakarta (Jakarta EE 9+) -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>2.0.0</version>
+        </dependency>
 
+        <!-- Implementación Glassfish -->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+    
     </dependencies>
 
     <build>

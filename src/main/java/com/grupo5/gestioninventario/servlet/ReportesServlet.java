@@ -5,8 +5,8 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet("/proveedores")
-public class ProveedoresServlet extends HttpServlet {
+@WebServlet("/reportes")
+public class ReportesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -17,7 +17,7 @@ public class ProveedoresServlet extends HttpServlet {
             return;
         }
 
-        request.setAttribute("vistaDinamica", "proveedores");
+        request.setAttribute("vistaDinamica", "reportes");
 
         request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }

@@ -11,8 +11,16 @@ public class MovimientosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("movimientos.jsp");
-        dispatcher.forward(request, response);
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("usuario") == null) {
+            response.sendRedirect(request.getContextPath() + "/login?error=sesion");
+            return;
+        }
+
+        request.setAttribute("vistaDinamica", "movimientos");
+
+        request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
 
     @Override
@@ -24,7 +32,5 @@ public class MovimientosServlet extends HttpServlet {
         String cantidad = request.getParameter("cantidad");
 
         System.out.println("Movimiento: " + tipo + " - Producto: " + producto + " - Cantidad: " + cantidad);
-
-        response.sendRedirect("movimientos.jsp?success=true");
     }
 }

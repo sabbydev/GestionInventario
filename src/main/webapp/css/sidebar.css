@@ -1,0 +1,68 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 11 oct. 2025, 22:06:23
+    Author     : Sebastian
+*/
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 240px;
+  background: #043d3c;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.sidebar h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #f0ad4e;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin: 1.2rem 0;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  display: block;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background: rgba(240, 173, 78, 0.2);
+  color: #f0ad4e;
+  padding-left: 1.3rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+}

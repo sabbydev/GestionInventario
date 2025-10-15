@@ -5,8 +5,8 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet("/proveedores")
-public class ProveedoresServlet extends HttpServlet {
+@WebServlet("/usuarios")
+public class UsuariosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -16,9 +16,17 @@ public class ProveedoresServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
-
-        request.setAttribute("vistaDinamica", "proveedores");
-
+        
+        request.setAttribute("vistaDinamica", "usuarios");
+        
         request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
 }
+
+
+
+
+
+
+
+

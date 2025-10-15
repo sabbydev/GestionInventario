@@ -1,0 +1,146 @@
+/* ---------- Barra de búsqueda ---------- */
+.search-bar {
+  margin: 1.5rem 2rem;
+}
+
+.search-bar form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-bar input[type="text"] {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-bar button {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #f0ad4e;
+  color: #043d3c;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: background 0.3s ease;
+}
+
+.search-bar button:hover {
+  background: #d9953f;
+}
+
+/* ---------- Tabla de inventario ---------- */
+.inventory-table {
+  margin: 1.5rem 2rem;
+  overflow-x: auto;
+}
+
+.inventory-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.95);
+  color: #043d3c;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.inventory-table th, .inventory-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.inventory-table thead {
+  background: #043d3c;
+  color: #f0ad4e;
+  font-weight: 600;
+}
+
+.inventory-table tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background 0.2s ease;
+}
+
+.inventory-table tbody tr:hover {
+  background: rgba(240, 173, 78, 0.15);
+}
+
+.inventory-table .edit {
+  color: #f0ad4e;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.inventory-table .delete {
+  color: #ef4444;
+  font-size: 1rem;
+}
+
+.inventory-table td:last-child {
+  display: flex;
+  align-items: center;
+}
+
+/* Scroll horizontal suave para tablas grandes */
+.inventory-table::-webkit-scrollbar {
+  height: 8px;
+}
+
+.inventory-table::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.inventory-table::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .content {
+    margin-left: 0;
+  }
+
+  .header-main {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .search-bar {
+    margin: 1rem;
+  }
+  
+  .inventory-table {
+    margin: 1rem;
+  }
+
+  .inventory-table th, .inventory-table td {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .inventory-table td:last-child {
+    justify-content: flex-start;
+  }
+}
