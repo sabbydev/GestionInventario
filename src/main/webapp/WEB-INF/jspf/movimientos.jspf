@@ -1,0 +1,84 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reportes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<section class="summary-cards">
+    <div class="card resumen entradas">
+        <i class="fa fa-arrow-down"></i>
+        <div>
+            <h3>125</h3>
+            <p>Entradas registradas</p>
+        </div>
+    </div>
+    <div class="card resumen salidas">
+        <i class="fa fa-arrow-up"></i>
+        <div>
+            <h3>87</h3>
+            <p>Salidas realizadas</p>
+        </div>
+    </div>
+    <div class="card resumen total">
+        <i class="fa fa-list"></i>
+        <div>
+            <h3>212</h3>
+            <p>Total de movimientos</p>
+        </div>
+    </div>
+</section>
+
+<!-- Barra de filtros -->
+<section class="report-toolbar">
+    <label>Desde:</label>
+    <input type="date" id="fechaInicio">
+    <label>Hasta:</label>
+    <input type="date" id="fechaFin">
+    <label>Tipo:</label>
+    <select id="tipoMovimiento">
+        <option value="todos">Todos</option>
+        <option value="entrada">Entrada</option>
+        <option value="salida">Salida</option>
+    </select>
+    <button class="btn-accion"><i class="fa fa-search"></i> Filtrar</button>
+    <button class="btn-accion"><i class="fa fa-file-pdf"></i> Exportar PDF</button>
+</section>
+
+<!-- Gráficos -->
+<section class="report-container">
+    <div class="chart-box">
+        <h2><i class="fa fa-chart-bar"></i> Entradas y Salidas por Mes</h2>
+        <canvas id="movimientosBar"></canvas>
+    </div>
+
+    <div class="chart-box">
+        <h2><i class="fa fa-chart-line"></i> Tendencia de Movimientos</h2>
+        <canvas id="movimientosLine"></canvas>
+    </div>
+</section>
+
+<!-- Tabla de Detalle -->
+<section class="detalle-inventario">
+    <div class="tabla">
+        <h2><i class="fa fa-list"></i> Detalle de Movimientos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>2025-10-01</td><td>Batería 45Ah</td><td>Entrada</td><td>20</td><td>admin</td></tr>
+                <tr><td>2025-10-02</td><td>Filtro de aceite</td><td>Salida</td><td>15</td><td>admin</td></tr>
+                <tr><td>2025-10-03</td><td>Llave inglesa</td><td>Entrada</td><td>10</td><td>admin</td></tr>
+                <tr><td>2025-10-05</td><td>Amortiguador</td><td>Salida</td><td>5</td><td>admin</td></tr>
+                <tr><td>2025-10-07</td><td>Aceite sintético</td><td>Entrada</td><td>25</td><td>admin</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
