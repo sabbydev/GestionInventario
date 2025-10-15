@@ -15,7 +15,7 @@
     <title>Proveedores | Autorepuestos Perú</title>
 
     <!-- CSS principal -->
-    <link rel="stylesheet" href="css/dashboard.css">
+    
     <link rel="stylesheet" href="css/proveedores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
