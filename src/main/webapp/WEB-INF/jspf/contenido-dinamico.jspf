@@ -14,7 +14,7 @@
       <%@ include file="/WEB-INF/jspf/movimientos.jspf" %>
   </c:when>
   <c:when test="${vistaDinamica eq 'categorias'}">
-      
+      <%@ include file="/WEB-INF/jspf/categorias.jspf" %>
   </c:when>
   <c:when test="${vistaDinamica eq 'reportes'}">
       <%@ include file="/WEB-INF/jspf/reportes.jspf" %>
