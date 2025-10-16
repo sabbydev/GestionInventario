@@ -1,10 +1,11 @@
-<%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reportes.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <section class="report-toolbar">
     <label>Desde:</label>
     <input type="date" id="fechaInicio">
@@ -20,7 +21,6 @@
     <button class="btn-accion"><i class="fa fa-file-excel"></i> Exportar Excel</button>
 </section>
 
-<!-- Gráficos -->
 <section class="report-container">
     <div class="chart-box">
         <h2><i class="fa fa-chart-column"></i> Movimientos por Categoría</h2>
@@ -33,7 +33,6 @@
     </div>
 </section>
 
-<!-- Nueva sección: Detalle de Inventario -->
 <section class="detalle-inventario">
     <div class="tabla">
         <h2><i class="fa fa-box"></i> Detalle de Inventario</h2>
@@ -58,7 +57,103 @@
     </div>
 
     <div class="grafico">
-        <h2><i class="fa fa-chart-pie"></i> Productos con bajo stock</h2>
+        <h2><i class="fa fa-chart-bar"></i> Productos con bajo stock</h2>
         <canvas id="stockChart"></canvas>
     </div>
 </section>
+
+<script>
+    // === MOVIMIENTOS POR CATEGORÍA ===
+    const barChart = new Chart(document.getElementById("barChart"), {
+        type: "bar",
+        data: {
+            labels: ["Lubricantes", "Eléctrico", "Herramientas", "Suspensión", "Motor", "Accesorios"],
+            datasets: [
+                {
+                    label: "Entradas",
+                    data: [80, 60, 40, 20, 55, 35],
+                    backgroundColor: "#007bff"
+                },
+                {
+                    label: "Salidas",
+                    data: [40, 30, 20, 10, 25, 15],
+                    backgroundColor: "#ffc107"
+                },
+                {
+                    label: "Devoluciones",
+                    data: [15, 10, 5, 3, 8, 4],
+                    backgroundColor: "#28a745"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom" } },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    barThickness: 25,          // 🔹 más delgado
+                    categoryPercentage: 0.55,  // 🔹 menos separación entre grupos
+                    barPercentage: 0.6         // 🔹 proporción del ancho
+                },
+                y: { beginAtZero: true }
+            },
+            layout: {
+                padding: { top: 10, bottom: 10 }
+            }
+        }
+    });
+
+    // === DISTRIBUCIÓN DE INVENTARIO (PIE) ===
+    const pieChart = new Chart(document.getElementById("pieChart"), {
+        type: "pie",
+        data: {
+            labels: ["Lubricantes", "Eléctrico", "Herramientas", "Suspensión", "Motor", "Accesorios"],
+            datasets: [{
+                data: [30, 20, 15, 10, 15, 10],
+                backgroundColor: ["#007bff", "#28a745", "#ffc107", "#dc3545", "#17a2b8", "#6f42c1"]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom"
+                }
+            }
+        }
+    });
+
+    // === PRODUCTOS CON BAJO STOCK ===
+    const stockChart = new Chart(document.getElementById("stockChart"), {
+        type: "bar",
+        data: {
+            labels: ["Amortiguador", "Llave inglesa", "Filtro aceite", "Pastillas freno", "Bujías", "Correa alternador"],
+            datasets: [{
+                label: "Stock disponible",
+                data: [8, 12, 15, 9, 10, 11],
+                backgroundColor: "#dc3545"
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    barThickness: 25,         // 🔹 más delgadas
+                    categoryPercentage: 0.5,  // 🔹 más espacio entre grupos
+                    barPercentage: 0.6
+                },
+                y: { beginAtZero: true }
+            },
+            layout: {
+                padding: { top: 10, bottom: 10 }
+            }
+        }
+    });
+</script>
+
