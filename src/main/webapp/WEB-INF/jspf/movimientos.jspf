@@ -1,10 +1,11 @@
-<%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reportes.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/movimientos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
+<!-- === Tarjetas resumen === -->
 <section class="summary-cards">
     <div class="card resumen entradas">
         <i class="fa fa-arrow-down"></i>
@@ -29,7 +30,7 @@
     </div>
 </section>
 
-<!-- Barra de filtros -->
+<!-- === Barra de filtros === -->
 <section class="report-toolbar">
     <label>Desde:</label>
     <input type="date" id="fechaInicio">
@@ -45,7 +46,7 @@
     <button class="btn-accion"><i class="fa fa-file-pdf"></i> Exportar PDF</button>
 </section>
 
-<!-- Gráficos -->
+<!-- === Gráficos === -->
 <section class="report-container">
     <div class="chart-box">
         <h2><i class="fa fa-chart-bar"></i> Entradas y Salidas por Mes</h2>
@@ -58,7 +59,7 @@
     </div>
 </section>
 
-<!-- Tabla de Detalle -->
+<!-- === Tabla Detalle === -->
 <section class="detalle-inventario">
     <div class="tabla">
         <h2><i class="fa fa-list"></i> Detalle de Movimientos</h2>
@@ -78,7 +79,85 @@
                 <tr><td>2025-10-03</td><td>Llave inglesa</td><td>Entrada</td><td>10</td><td>admin</td></tr>
                 <tr><td>2025-10-05</td><td>Amortiguador</td><td>Salida</td><td>5</td><td>admin</td></tr>
                 <tr><td>2025-10-07</td><td>Aceite sintético</td><td>Entrada</td><td>25</td><td>admin</td></tr>
+                <tr><td>2025-10-08</td><td>Filtro de combustible</td><td>Salida</td><td>5</td><td>admin</td></tr>
+                <tr><td>2025-10-05</td><td>Pastillas de freno</td><td>Entrada</td><td>100</td><td>admin</td></tr>
+                <tr><td>2025-10-05</td><td>Pastillas de freno</td><td>Salida</td><td>55</td><td>admin</td></tr>
             </tbody>
         </table>
     </div>
 </section>
+
+<!-- === Scripts de Chart.js === -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // === Gráfico de barras ===
+    const ctxBar = document.getElementById('movimientosBar');
+    if (ctxBar) {
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
+                datasets: [
+                    {
+                        label: 'Entradas',
+                        data: [30, 45, 28, 50, 40, 55, 60, 70, 65, 80],
+                        backgroundColor: '#2ecc71'
+                    },
+                    {
+                        label: 'Salidas',
+                        data: [20, 25, 18, 40, 35, 30, 50, 55, 45, 60],
+                        backgroundColor: '#e74c3c'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: '#333' } },
+                    x: { ticks: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#333' } } }
+            }
+        });
+    }
+
+    // === Gráfico de líneas ===
+    const ctxLine = document.getElementById('movimientosLine');
+    if (ctxLine) {
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
+                datasets: [
+                    {
+                        label: 'Entradas',
+                        data: [30, 45, 28, 50, 40, 55, 60, 70, 65, 80],
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Salidas',
+                        data: [20, 25, 18, 40, 35, 30, 50, 55, 45, 60],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#333' } } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: '#333' } },
+                    x: { ticks: { color: '#333' } }
+                }
+            }
+        });
+    }
+});
+</script>
