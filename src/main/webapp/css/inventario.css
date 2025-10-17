@@ -17,21 +17,21 @@
   outline: none;
 }
 
-.search-bar button {
+.search-bar .btn-add {
+  margin-left: auto;
+  background: #3498db;
+  color: #fff;
+  text-decoration: none;
   padding: 0.6rem 1rem;
   border-radius: 8px;
-  border: none;
-  background: #f0ad4e;
-  color: #043d3c;
   font-weight: 600;
-  cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   transition: background 0.3s ease;
 }
 
-.search-bar button:hover {
+.search-bar .btn-add:hover {
   background: #d9953f;
 }
 

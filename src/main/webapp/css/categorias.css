@@ -1,188 +1,120 @@
-/* --- Tarjetas resumen --- */
-.summary-cards {
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 16 oct. 2025, 20:46:24
+    Author     : Sebastian
+*/
+
+/* --- Barra de búsqueda --- */
+.search-bar {
+    margin: 1.5rem 2rem;
+}
+
+.search-bar form {
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin: 10px 0;
+    gap: 0.5rem;
 }
 
-.card.resumen {
-    flex: 1 1 30%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #fff;
-    border-radius: 10px;
-    padding: 12px 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card.resumen:hover {
-    transform: scale(1.02);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-}
-
-.card.resumen i {
-    font-size: 1.6em;
-}
-
-.card.resumen.entradas i {
-    color: #2ecc71;
-}
-
-.card.resumen.salidas i {
-    color: #e74c3c;
-}
-
-.card.resumen.total i {
-    color: #3498db;
-}
-
-.card.resumen h3 {
-    font-size: 1.2em;
-    margin: 0;
-    color: #333;
-}
-
-.card.resumen p {
-    color: #666;
-    font-size: 0.9em;
-    margin: 2px 0 0 0;
-}
-
-/* --- Barra de herramientas --- */
-.report-toolbar {
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.report-toolbar label {
-    font-weight: 500;
-    color: #333;
-    font-size: 0.9em;
-}
-
-.report-toolbar input,
-.report-toolbar select {
-    padding: 5px 8px;
+.search-bar input[type="text"] {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    font-size: 1rem;
     outline: none;
-    font-size: 0.9em;
 }
 
-.btn-accion {
-    background-color: #62BCAD;
+.search-bar button {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
     border: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    font-size: 0.9em;
-}
-
-.btn-accion:hover {
-    background-color: #4da896;
-    transform: scale(1.03);
-}
-
-/* --- Gráficos --- */
-.report-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 15px;
-    margin-top: 5px;
-}
-
-.chart-box {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    padding: 12px;
-    flex: 1 1 48%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.chart-box h2 {
-    font-size: 1em;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.chart-box canvas {
-    width: 100% !important;
-    max-width: 600px;
-    height: 280px !important;
-}
-
-/* --- Tabla de detalle --- */
-.detalle-inventario {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    gap: 50px;
-}
-
-.detalle-inventario .tabla,
-.detalle-inventario .grafico {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    padding: 12px;
-    flex: 1 1 50%;
-}
-
-.detalle-inventario h2 {
-    font-size: 1em;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.detalle-inventario table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85em;
-    color: #333;
-}
-
-.detalle-inventario th {
     background: #62BCAD;
     color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: background 0.3s ease;
+}
+
+.search-bar button:hover {
+    background: #4da896;
+}
+
+.search-bar .btn-add {
+    margin-left: auto;
+    background: #3498db;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: background 0.3s ease;
+}
+
+.search-bar .btn-add:hover {
+    background: #2f87c5;
+}
+
+/* --- Tabla de categorías --- */
+.inventory-table {
+    margin: 1.5rem 2rem;
+    overflow-x: auto;
+}
+
+.inventory-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.inventory-table th,
+.inventory-table td {
+    padding: 0.8rem 1rem;
     text-align: left;
-    padding: 6px;
-    border-radius: 4px 4px 0 0;
+    font-size: 0.95rem;
 }
 
-.detalle-inventario td {
-    padding: 6px;
+.inventory-table thead {
+    background: #62BCAD;
+    color: #fff;
+    font-weight: 600;
+}
+
+.inventory-table tbody tr {
     border-bottom: 1px solid #eee;
+    transition: background 0.2s ease;
 }
 
-.detalle-inventario tr:hover {
-    background-color: #f9f9f9;
+.inventory-table tbody tr:hover {
+    background: rgba(98, 188, 173, 0.15);
 }
 
-.detalle-inventario .grafico canvas {
-    width: 100% !important;
-    max-width: 260px;
-    height: 180px !important;
+.inventory-table .edit {
+    color: #3498db;
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.inventory-table .delete {
+    color: #ef4444;
+    font-size: 1rem;
+}
+
+.inventory-table td.actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* --- Responsividad --- */
@@ -209,5 +141,23 @@
         flex: 1 1 100%;
         max-width: 420px;
     }
-}
 
+    /* Ajustes responsivos para categorías */
+    .search-bar {
+        margin: 1rem;
+    }
+
+    .inventory-table {
+        margin: 1rem;
+    }
+
+    .inventory-table th,
+    .inventory-table td {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .inventory-table td.actions {
+        justify-content: flex-start;
+    }
+}
