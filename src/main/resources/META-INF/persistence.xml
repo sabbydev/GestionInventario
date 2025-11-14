@@ -11,7 +11,6 @@
             <property name="jakarta.persistence.jdbc.password" value="inventario"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
-            <property name="jakarta.persistence.sql-load-script-source" value="META-INF/load.sql"/>
         </properties>
     </persistence-unit>
 </persistence>
