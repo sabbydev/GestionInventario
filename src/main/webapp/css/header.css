@@ -33,6 +33,47 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   cursor: pointer;
 }
 
+/* === SELECTOR DE IDIOMA (BANDERAS) === */
+.language-switcher {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.language-switcher a {
+  display: inline-block;
+  line-height: 0;
+}
+
+.flag-icon {
+  width: 54px;         /* TRIPLE tamaño: antes 18x12 */
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 0 2px rgba(0,0,0,0.4);
+  image-rendering: crisp-edges;
+  transition: transform 0.15s ease,
+              border-color 0.15s ease,
+              box-shadow 0.15s ease;
+}
+
+.flag-icon:hover {
+  transform: scale(1.08);
+  border-color: #ffffff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.6);
+}
+
+/* === Fecha y hora === */
+.datetime {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
   .burger-menu-toggle {
@@ -44,4 +85,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
     gap: 0.5rem;
   }
+
+  .language-switcher {
+    margin-right: 0;
+  }
 }
+
