@@ -1,18 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.grupo5.gestioninventario.modelo;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "roles")
-public class Rol {
+@Table(name = "categorias")
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_rol")
+    @Column(name = "id_categoria")
     private Integer id;
 
     @Column(name = "nombre", nullable = false, unique = true, length = 50)
@@ -21,7 +18,9 @@ public class Rol {
     @Column(name = "descripcion", length = 150)
     private String descripcion;
 
-    // Getters y Setters
+    @OneToMany(mappedBy = "categoria")
+    private List<Producto> productos;
+
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -30,5 +29,7 @@ public class Rol {
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-}
 
+    public List<Producto> getProductos() { return productos; }
+    public void setProductos(List<Producto> productos) { this.productos = productos; }
+}

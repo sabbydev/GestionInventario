@@ -21,39 +21,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Elvis Arqueros</td>
-                <td>admin@demo.local</td>
-                <td>Administrador</td>
-                <td><span class="estado activo">Activo</span></td>
-                <td class="acciones">
-                    <button class="btn-editar"><i class="fa fa-pen"></i></button>
-                    <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Liz</td>
-                <td>operador1@demo.local</td>
-                <td>Vendedor</td>
-                <td><span class="estado activo">Activo</span></td>
-                <td class="acciones">
-                    <button class="btn-editar"><i class="fa fa-pen"></i></button>
-                    <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Juan Carlos</td>
-                <td>gerente1@demo.local</td>
-                <td>Almacén</td>
-                <td><span class="estado inactivo">Inactivo</span></td>
-                <td class="acciones">
-                    <button class="btn-editar"><i class="fa fa-pen"></i></button>
-                    <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
-                </td>
-            </tr>
+            <c:forEach var="u" items="${usuarios}">
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.nombre}</td>
+                    <td>${u.correo}</td>
+                    <td><c:out value="${u.rol != null ? u.rol.nombre : ''}"/></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${u.estado}"><span class="estado activo">Activo</span></c:when>
+                            <c:otherwise><span class="estado inactivo">Inactivo</span></c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td class="acciones">
+                        <button class="btn-editar"><i class="fa fa-pen"></i></button>
+                        <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
 </section>

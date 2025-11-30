@@ -41,17 +41,21 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Categoría</th>
-                    <th>Marca</th>
+                    <th>Proveedor</th>
                     <th>Precio</th>
                     <th>Stock</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Batería 45Ah</td><td>Eléctrico</td><td>Panasonic</td><td>S/ 350.00</td><td>35</td></tr>
-                <tr><td>Filtro de aceite</td><td>Lubricantes</td><td>Shell</td><td>S/ 25.90</td><td>75</td></tr>
-                <tr><td>Llave inglesa</td><td>Herramientas</td><td>Bosch</td><td>S/ 99.90</td><td>12</td></tr>
-                <tr><td>Aceite sintético</td><td>Lubricantes</td><td>Castrol</td><td>S/ 120.00</td><td>54</td></tr>
-                <tr><td>Amortiguador</td><td>Suspensión</td><td>KYB</td><td>S/ 480.00</td><td>8</td></tr>
+                <c:forEach var="p" items="${productos}">
+                    <tr>
+                        <td>${p.nombre}</td>
+                        <td><c:out value="${p.categoria != null ? p.categoria.nombre : ''}"/></td>
+                        <td><c:out value="${p.proveedor != null ? p.proveedor.nombre : ''}"/></td>
+                        <td>S/ ${p.precio}</td>
+                        <td>${p.stock}</td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>

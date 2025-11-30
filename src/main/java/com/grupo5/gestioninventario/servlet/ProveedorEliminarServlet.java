@@ -1,7 +1,7 @@
 package com.grupo5.gestioninventario.servlet;
 
-import com.grupo5.gestioninventario.repositorio.Implementaciones.JPARepositorioCategoria;
-import com.grupo5.gestioninventario.repositorio.IRepositorioCategoria;
+import com.grupo5.gestioninventario.repositorio.IRepositorioProveedor;
+import com.grupo5.gestioninventario.repositorio.Implementaciones.JPARepositorioProveedor;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletException;
@@ -12,33 +12,35 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/categorias")
-public class CategoriasServlet extends HttpServlet {
+@WebServlet("/proveedores/eliminar")
+public class ProveedorEliminarServlet extends HttpServlet {
 
     private EntityManagerFactory emf;
-    private IRepositorioCategoria repoCategoria;
+    private IRepositorioProveedor repoProveedor;
 
     @Override
     public void init() throws ServletException {
         emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-        repoCategoria = new JPARepositorioCategoria(emf);
+        repoProveedor = new JPARepositorioProveedor(emf);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         HttpSession session = request.getSession(false);
-
         if (session == null || session.getAttribute("usuario") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
-
-        request.setAttribute("vistaDinamica", "categorias");
-        request.setAttribute("categorias", repoCategoria.findAll());
-        request.setAttribute("conteosCategorias", repoCategoria.obtenerConteoProductosPorCategoria());
-
-        request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
+        String idStr = request.getParameter("id");
+        if (idStr != null && !idStr.isBlank()) {
+            try {
+                repoProveedor.deleteById(Integer.valueOf(idStr));
+                session.setAttribute("flashSuccess", "Proveedor eliminado");
+            } catch (Exception e) {
+                session.setAttribute("flashError", "No se puede eliminar el proveedor");
+            }
+        }
+        response.sendRedirect(request.getContextPath() + "/proveedores");
     }
 }

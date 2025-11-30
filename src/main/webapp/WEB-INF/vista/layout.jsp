@@ -26,6 +26,18 @@
       <div id="dynamic-content">
         <header id="header"><%@ include file="/WEB-INF/jspf/header.jspf" %></header>
         <section id="main">
+            <%
+              String flashSuccess = (String) session.getAttribute("flashSuccess");
+              String flashError = (String) session.getAttribute("flashError");
+              if (flashSuccess != null) { request.setAttribute("flashSuccess", flashSuccess); session.removeAttribute("flashSuccess"); }
+              if (flashError != null) { request.setAttribute("flashError", flashError); session.removeAttribute("flashError"); }
+            %>
+            <c:if test="${not empty flashSuccess}">
+                <div class="alert success">${flashSuccess}</div>
+            </c:if>
+            <c:if test="${not empty flashError}">
+                <div class="alert error">${flashError}</div>
+            </c:if>
             <c:if test="${not empty vistaDinamica}">
                 <%@ include file="/WEB-INF/jspf/contenido-dinamico.jspf" %>
             </c:if>

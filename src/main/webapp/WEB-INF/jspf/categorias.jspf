@@ -11,7 +11,7 @@
         <input type="text" name="query" placeholder="Buscar categoría..." value="">
         <button type="submit"><i class="fa fa-search"></i> Buscar</button>
     </form>
-    <a href="#" class="btn-add">
+    <a href="${pageContext.request.contextPath}/categorias/nuevo" class="btn-add">
         <i class="fa fa-plus"></i> Nueva Categoría
     </a>
 </section>
@@ -30,76 +30,23 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>C001</td>
-                <td>Filtros</td>
-                <td>Filtros de aceite, aire y combustible para distintos modelos.</td>
-                <td>85</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>C002</td>
-                <td>Frenos</td>
-                <td>Pastillas, discos, zapatas y líquidos de freno.</td>
-                <td>62</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>C003</td>
-                <td>Suspensión</td>
-                <td>Amortiguadores, resortes y brazos de suspensión.</td>
-                <td>47</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>C004</td>
-                <td>Motor</td>
-                <td>Correas, válvulas, empaques y componentes internos.</td>
-                <td>74</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>C005</td>
-                <td>Eléctrico</td>
-                <td>Baterías, alternadores, sensores y bujías.</td>
-                <td>58</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>C006</td>
-                <td>Refrigeración</td>
-                <td>Radiadores, ventiladores y bombas de agua.</td>
-                <td>39</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>C007</td>
-                <td>Transmisión</td>
-                <td>Embragues, ejes, juntas y aceites de transmisión.</td>
-                <td>26</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
+            <c:forEach var="c" items="${categorias}">
+                <tr>
+                    <td>${c.id}</td>
+                    <td>${c.nombre}</td>
+                    <td>${c.descripcion}</td>
+                    <td><c:out value="${conteosCategorias[c.id]}" default="0"/></td>
+                    <td class="actions">
+                        <a href="${pageContext.request.contextPath}/categorias/editar?id=${c.id}" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
+                        <form action="${pageContext.request.contextPath}/categorias/eliminar" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="${c.id}" />
+                            <button type="submit" class="delete" title="Eliminar" style="background:none;border:none;cursor:pointer;">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
 </section>

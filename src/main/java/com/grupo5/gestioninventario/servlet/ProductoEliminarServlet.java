@@ -4,13 +4,16 @@ import com.grupo5.gestioninventario.repositorio.IRepositorioProducto;
 import com.grupo5.gestioninventario.repositorio.Implementaciones.JPARepositorioProducto;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/reportes")
-public class ReportesServlet extends HttpServlet {
+@WebServlet("/productos/eliminar")
+public class ProductoEliminarServlet extends HttpServlet {
 
     private EntityManagerFactory emf;
     private IRepositorioProducto repoProducto;
@@ -20,19 +23,24 @@ public class ReportesServlet extends HttpServlet {
         emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         repoProducto = new JPARepositorioProducto(emf);
     }
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-
         if (session == null || session.getAttribute("usuario") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
-
-        request.setAttribute("vistaDinamica", "reportes");
-        request.setAttribute("productos", repoProducto.findAll());
-
-        request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
+        String idStr = request.getParameter("id");
+        if (idStr != null && !idStr.isBlank()) {
+            try {
+                repoProducto.deleteById(Integer.valueOf(idStr));
+                session.setAttribute("flashSuccess", "Producto eliminado");
+            } catch (Exception e) {
+                session.setAttribute("flashError", "No se puede eliminar el producto");
+            }
+        }
+        response.sendRedirect(request.getContextPath() + "/inventario");
     }
 }

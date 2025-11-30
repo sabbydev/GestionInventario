@@ -1,0 +1,54 @@
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/inventario.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Nuevo Repuesto</title>
+</head>
+
+<section class="inventory-table">
+    <h2>Nuevo Repuesto</h2>
+    <form action="${pageContext.request.contextPath}/productos/${producto != null ? 'editar' : 'nuevo'}" method="post" class="form-producto">
+        <c:if test="${producto != null}">
+            <input type="hidden" name="id" value="${producto.id}" />
+        </c:if>
+        <div class="form-row">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" value="${producto != null ? producto.nombre : ''}" required>
+        </div>
+        <div class="form-row">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" rows="3"><c:out value="${producto != null ? producto.descripcion : ''}"/></textarea>
+        </div>
+        <div class="form-row">
+            <label for="precio">Precio</label>
+            <input type="number" id="precio" name="precio" step="0.01" min="0" value="${producto != null ? producto.precio : ''}" required>
+        </div>
+        <div class="form-row">
+            <label for="stock">Stock</label>
+            <input type="number" id="stock" name="stock" min="0" value="${producto != null ? producto.stock : ''}" required>
+        </div>
+        <div class="form-row">
+            <label for="id_categoria">Categoría</label>
+            <select id="id_categoria" name="id_categoria">
+                <option value="">Sin categoría</option>
+                <c:forEach var="c" items="${categorias}">
+                    <option value="${c.id}" ${producto != null && producto.categoria != null && c.id == producto.categoria.id ? 'selected' : ''}>${c.nombre}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="id_proveedor">Proveedor</label>
+            <select id="id_proveedor" name="id_proveedor">
+                <option value="">Sin proveedor</option>
+                <c:forEach var="pv" items="${proveedores}">
+                    <option value="${pv.id}" ${producto != null && producto.proveedor != null && pv.id == producto.proveedor.id ? 'selected' : ''}>${pv.nombre}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-add"><i class="fa fa-save"></i> Guardar</button>
+            <a href="${pageContext.request.contextPath}/inventario" class="btn-add"><i class="fa fa-times"></i> Cancelar</a>
+        </div>
+    </form>
+</section>

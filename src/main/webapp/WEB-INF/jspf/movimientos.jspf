@@ -10,24 +10,58 @@
     <div class="card resumen entradas">
         <i class="fa fa-arrow-down"></i>
         <div>
-            <h3>125</h3>
+            <h3>${resumenEntradas}</h3>
             <p>Entradas registradas</p>
         </div>
     </div>
     <div class="card resumen salidas">
         <i class="fa fa-arrow-up"></i>
         <div>
-            <h3>87</h3>
+            <h3>${resumenSalidas}</h3>
             <p>Salidas realizadas</p>
         </div>
     </div>
     <div class="card resumen total">
         <i class="fa fa-list"></i>
         <div>
-            <h3>212</h3>
+            <h3>${resumenTotal}</h3>
             <p>Total de movimientos</p>
         </div>
     </div>
+</section>
+
+<section class="form-movimiento">
+    <h2><i class="fa fa-exchange-alt"></i> Registrar Movimiento</h2>
+    <form action="${pageContext.request.contextPath}/movimientos" method="post" class="form-mov">
+        <div class="form-row">
+            <label for="id_producto">Producto</label>
+            <select id="id_producto" name="id_producto" required>
+                <c:forEach var="p" items="${productos}">
+                    <option value="${p.id}">${p.nombre}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo" required>
+                <option value="entrada">Entrada</option>
+                <option value="salida">Salida</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" id="cantidad" name="cantidad" min="1" required>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-accion"><i class="fa fa-save"></i> Registrar</button>
+        </div>
+    </form>
+    <c:if test="${not empty errorMovimiento}">
+        <div class="alert error">${errorMovimiento}</div>
+    </c:if>
+    <c:if test="${not empty exitoMovimiento}">
+        <div class="alert success">${exitoMovimiento}</div>
+    </c:if>
 </section>
 
 <!-- === Barra de filtros === -->
@@ -74,14 +108,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>2025-10-01</td><td>Batería 45Ah</td><td>Entrada</td><td>20</td><td>admin</td></tr>
-                <tr><td>2025-10-02</td><td>Filtro de aceite</td><td>Salida</td><td>15</td><td>admin</td></tr>
-                <tr><td>2025-10-03</td><td>Llave inglesa</td><td>Entrada</td><td>10</td><td>admin</td></tr>
-                <tr><td>2025-10-05</td><td>Amortiguador</td><td>Salida</td><td>5</td><td>admin</td></tr>
-                <tr><td>2025-10-07</td><td>Aceite sintético</td><td>Entrada</td><td>25</td><td>admin</td></tr>
-                <tr><td>2025-10-08</td><td>Filtro de combustible</td><td>Salida</td><td>5</td><td>admin</td></tr>
-                <tr><td>2025-10-05</td><td>Pastillas de freno</td><td>Entrada</td><td>100</td><td>admin</td></tr>
-                <tr><td>2025-10-05</td><td>Pastillas de freno</td><td>Salida</td><td>55</td><td>admin</td></tr>
+                <c:forEach var="m" items="${movimientos}">
+                    <tr>
+                        <td>${m.fecha}</td>
+                        <td><c:out value="${m.producto != null ? m.producto.nombre : ''}"/></td>
+                        <td>${m.tipo}</td>
+                        <td>${m.cantidad}</td>
+                        <td><c:out value="${m.usuario != null ? m.usuario.nombre : ''}"/></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>
@@ -98,16 +133,16 @@ document.addEventListener("DOMContentLoaded", function() {
         new Chart(ctxBar, {
             type: 'bar',
             data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
+                labels: [${labelsMeses}],
                 datasets: [
                     {
                         label: 'Entradas',
-                        data: [30, 45, 28, 50, 40, 55, 60, 70, 65, 80],
+                        data: [${dataEntradasMes}],
                         backgroundColor: '#2ecc71'
                     },
                     {
                         label: 'Salidas',
-                        data: [20, 25, 18, 40, 35, 30, 50, 55, 45, 60],
+                        data: [${dataSalidasMes}],
                         backgroundColor: '#e74c3c'
                     }
                 ]
@@ -129,11 +164,11 @@ document.addEventListener("DOMContentLoaded", function() {
         new Chart(ctxLine, {
             type: 'line',
             data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
+                labels: [${labelsMeses}],
                 datasets: [
                     {
                         label: 'Entradas',
-                        data: [30, 45, 28, 50, 40, 55, 60, 70, 65, 80],
+                        data: [${dataEntradasMes}],
                         borderColor: '#2ecc71',
                         backgroundColor: 'rgba(46, 204, 113, 0.2)',
                         tension: 0.3,
@@ -141,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     },
                     {
                         label: 'Salidas',
-                        data: [20, 25, 18, 40, 35, 30, 50, 55, 45, 60],
+                        data: [${dataSalidasMes}],
                         borderColor: '#e74c3c',
                         backgroundColor: 'rgba(231, 76, 60, 0.2)',
                         tension: 0.3,

@@ -16,6 +16,9 @@
   <c:when test="${vistaDinamica eq 'categorias'}">
       <%@ include file="/WEB-INF/jspf/categorias.jspf" %>
   </c:when>
+  <c:when test="${vistaDinamica eq 'categoria-form'}">
+      <%@ include file="/WEB-INF/jspf/categoria-form.jspf" %>
+  </c:when>
   <c:when test="${vistaDinamica eq 'reportes'}">
       <%@ include file="/WEB-INF/jspf/reportes.jspf" %>
   </c:when>
@@ -25,7 +28,13 @@
   <c:when test="${vistaDinamica eq 'usuarios'}">
       <%@ include file="/WEB-INF/jspf/usuarios.jspf" %>
   </c:when>
+  <c:when test="${vistaDinamica eq 'producto-form'}">
+      <%@ include file="/WEB-INF/jspf/producto-form.jspf" %>
+  </c:when>
+  <c:when test="${vistaDinamica eq 'proveedor-form'}">
+      <%@ include file="/WEB-INF/jspf/proveedor-form.jspf" %>
+  </c:when>
   <c:otherwise>
-      <h2>Página no encontrada</h2>
+      <h2>PÃ¡gina no encontrada</h2>
   </c:otherwise>
 </c:choose>

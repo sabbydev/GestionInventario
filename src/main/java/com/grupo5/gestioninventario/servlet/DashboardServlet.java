@@ -1,6 +1,5 @@
 package com.grupo5.gestioninventario.servlet;
 
-import com.grupo5.gestioninventario.modelo.Usuario;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

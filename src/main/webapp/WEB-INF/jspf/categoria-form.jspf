@@ -1,0 +1,29 @@
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/categorias.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Categoría</title>
+</head>
+
+<section class="inventory-table">
+    <h2>${categoria != null ? 'Editar Categoría' : 'Nueva Categoría'}</h2>
+    <form action="${pageContext.request.contextPath}/categorias/${categoria != null ? 'editar' : 'nuevo'}" method="post" class="form-categoria">
+        <c:if test="${categoria != null}">
+            <input type="hidden" name="id" value="${categoria.id}" />
+        </c:if>
+        <div class="form-row">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" value="${categoria != null ? categoria.nombre : ''}" required>
+        </div>
+        <div class="form-row">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" rows="3"><c:out value="${categoria != null ? categoria.descripcion : ''}"/></textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-add"><i class="fa fa-save"></i> Guardar</button>
+            <a href="${pageContext.request.contextPath}/categorias" class="btn-add"><i class="fa fa-times"></i> Cancelar</a>
+        </div>
+    </form>
+</section>
+

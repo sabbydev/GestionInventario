@@ -8,11 +8,11 @@
 
 <!-- Barra de búsqueda -->
 <section class="search-bar">
-    <form action="#" method="get">
-        <input type="text" name="query" placeholder="Buscar repuesto..." value="">
+    <form action="${pageContext.request.contextPath}/inventario" method="get">
+        <input type="text" name="q" placeholder="Buscar repuesto..." value="${q}">
         <button type="submit"><i class="fa fa-search"></i> Buscar</button>
     </form>
-    <a href="#" class="btn-add">
+    <a href="${pageContext.request.contextPath}/productos/nuevo" class="btn-add">
         <i class="fa fa-plus"></i> Nuevo Repuesto
     </a>
 </section>
@@ -33,102 +33,32 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>R001</td>
-                <td>Filtro de Aceite Toyota Corolla</td>
-                <td>Filtros</td>
-                <td>Lubrimax S.A.</td>
-                <td>35</td>
-                <td>S/. 25.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>R002</td>
-                <td>Batería 12V 60Ah</td>
-                <td>Eléctrico</td>
-                <td>EnerBat Perú</td>
-                <td>12</td>
-                <td>S/. 420.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>R003</td>
-                <td>Pastillas de Freno Delanteras Nissan Sentra</td>
-                <td>Frenos</td>
-                <td>AutoParts Andina</td>
-                <td>20</td>
-                <td>S/. 180.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>R004</td>
-                <td>Amortiguador Trasero Hyundai Tucson</td>
-                <td>Suspensión</td>
-                <td>Repuestera Sur</td>
-                <td>10</td>
-                <td>S/. 350.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>R005</td>
-                <td>Filtro de Aire Honda Civic</td>
-                <td>Filtros</td>
-                <td>MotorClean S.A.</td>
-                <td>40</td>
-                <td>S/. 38.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>R006</td>
-                <td>Correa de Distribución Mitsubishi L200</td>
-                <td>Motor</td>
-                <td>JapAuto Repuestos</td>
-                <td>15</td>
-                <td>S/. 210.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>R007</td>
-                <td>Bujías NGK Iridium</td>
-                <td>Encendido</td>
-                <td>NGK Distribuidores</td>
-                <td>50</td>
-                <td>S/. 45.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>R008</td>
-                <td>Radiador Toyota Hilux</td>
-                <td>Refrigeración</td>
-                <td>CoolDrive SAC</td>
-                <td>8</td>
-                <td>S/. 680.00</td>
-                <td class="actions">
-                    <a href="#" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="delete" title="Eliminar"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
+            <c:forEach var="p" items="${productos}">
+                <tr>
+                    <td>${p.id}</td>
+                    <td>${p.nombre}</td>
+                    <td><c:out value="${p.categoria != null ? p.categoria.nombre : ''}" default="—"/></td>
+                    <td><c:out value="${p.proveedor != null ? p.proveedor.nombre : ''}" default="—"/></td>
+                    <td>${p.stock}</td>
+                    <td>S/. ${p.precio}</td>
+                    <td class="actions">
+                        <a href="${pageContext.request.contextPath}/productos/editar?id=${p.id}" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
+                        <form action="${pageContext.request.contextPath}/productos/eliminar" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="${p.id}" />
+                            <button type="submit" class="delete" title="Eliminar" style="background:none;border:none;cursor:pointer;">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
+    <div class="paginacion">
+        <c:if test="${pages > 1}">
+            <a href="${pageContext.request.contextPath}/inventario?q=${q}&page=${page > 1 ? page - 1 : 1}&size=${size}">Anterior</a>
+            <span>Página ${page} de ${pages}</span>
+            <a href="${pageContext.request.contextPath}/inventario?q=${q}&page=${page < pages ? page + 1 : pages}&size=${size}">Siguiente</a>
+        </c:if>
+    </div>
 </section>
