@@ -40,7 +40,6 @@ body {
 }
 
 /* Logo-titulo */
-
 .logo-section img {
     width: 140px;       
     height: auto;       /* mantiene proporción */
@@ -62,7 +61,6 @@ body {
 }
 
 /* Formulario */
-
 .login-form {
     display: flex;
     flex-direction: column;
@@ -91,7 +89,7 @@ body {
     box-shadow: 0 0 4px rgba(10, 46, 92, 0.3);
 }
 
-/* btn */
+/* Botón */
 .login-form button {
     padding: 12px;
     background: linear-gradient(90deg, #0a2e5c, #123e75);
@@ -107,5 +105,39 @@ body {
 .login-form button:hover {
     opacity: 0.9;
     transform: scale(1.02);
+}
+
+/* === SELECTOR DE IDIOMA EN LOGIN (BANDERAS) === */
+.language-switcher {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.language-switcher a {
+    display: inline-block;
+    line-height: 0; /* quita espacio extra alrededor de la imagen */
+}
+
+.language-switcher .flag-icon {
+    width: 36px;      /* DOBLE tamaño: antes 18x12 */
+    height: 24px;
+    object-fit: cover;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.3);
+    box-shadow: 0 0 1px rgba(0,0,0,0.3);
+    image-rendering: crisp-edges;
+    transition: transform 0.15s ease,
+                border-color 0.15s ease,
+                box-shadow 0.15s ease;
+}
+
+.language-switcher .flag-icon:hover {
+    transform: scale(1.1);
+    border-color: rgba(0,0,0,0.6);
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 

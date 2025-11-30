@@ -1,20 +1,45 @@
-<%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <header class="header">
     <button class="burger-menu-toggle">
         <i class="fa fa-bars"></i>
     </button>
+
     <c:if test="${not empty usuario}">
-        <h1>Bienvenido, ${usuario.nombre}</h1>
+        <h1>
+            <fmt:message key="header.welcome" bundle="${msg}">
+                <fmt:param value="${usuario.nombre}"/>
+            </fmt:message>
+        </h1>
     </c:if>
     <c:if test="${empty usuario}">
-        <h1>Bienvenido, invitado</h1>
+        <h1>
+            <fmt:message key="header.welcome.guest" bundle="${msg}"/>
+        </h1>
     </c:if>
+
+    <!-- Selector de idioma con banderas -->
+    <div class="language-switcher">
+        <a href="?lang=es" title="Español">
+            <img src="${pageContext.request.contextPath}/img/flags/es.png" alt="ES" class="flag-icon">
+        </a>
+        <a href="?lang=en" title="English">
+            <img src="${pageContext.request.contextPath}/img/flags/en.png" alt="EN" class="flag-icon">
+        </a>
+        <a href="?lang=de" title="Deutsch">
+            <img src="${pageContext.request.contextPath}/img/flags/de.png" alt="DE" class="flag-icon">
+        </a>
+        <a href="?lang=fr" title="Français">
+            <img src="${pageContext.request.contextPath}/img/flags/fr.png" alt="FR" class="flag-icon">
+        </a>
+    </div>
+
     <div class="datetime">
         <i class="fa fa-clock"></i> <span id="hora"></span>
         <i class="fa fa-calendar"></i> <span id="fecha"></span>

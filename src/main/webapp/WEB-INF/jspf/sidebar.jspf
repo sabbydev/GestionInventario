@@ -1,5 +1,5 @@
-<%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
@@ -9,15 +9,60 @@
     <h2>Autorepuestos</h2>
     <nav>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>   
-            <li><a href="${pageContext.request.contextPath}/inventario"><i class="fa fa-box"></i> Inventario</a></li>
-            <li><a href="${pageContext.request.contextPath}/proveedores"><i class="fa fa-truck"></i> Proveedores</a></li>
-            <li><a href="${pageContext.request.contextPath}/movimientos"><i class="fa fa-exchange-alt"></i> Movimientos</a></li>
-            <li><a href="${pageContext.request.contextPath}/categorias"><i class="fa fa-tags"></i> Categorías</a></li>
-            <li><a href="${pageContext.request.contextPath}/reportes"><i class="fa fa-chart-bar"></i> Reportes</a></li>
-            <li><a href="${pageContext.request.contextPath}/empresa"><i class="fa fa-building"></i> Empresa</a></li>
-            <li><a href="${pageContext.request.contextPath}/usuarios"><i class="fa fa-users"></i> Usuarios</a></li>
-            <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out-alt"></i> Cerrar sesión</a></li>
+            <li>
+                <a href="${pageContext.request.contextPath}/dashboard">
+                    <i class="fa fa-home"></i>
+                    <fmt:message key="menu.dashboard" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/inventario">
+                    <i class="fa fa-box"></i>
+                    <fmt:message key="menu.inventario" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/proveedores">
+                    <i class="fa fa-truck"></i>
+                    <fmt:message key="menu.proveedores" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/movimientos">
+                    <i class="fa fa-exchange-alt"></i>
+                    <fmt:message key="menu.movimientos" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/categorias">
+                    <i class="fa fa-tags"></i>
+                    <fmt:message key="menu.categorias" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/reportes">
+                    <i class="fa fa-chart-bar"></i>
+                    <fmt:message key="menu.reportes" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/empresa">
+                    <i class="fa fa-building"></i>
+                    <fmt:message key="menu.empresa" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/usuarios">
+                    <i class="fa fa-users"></i>
+                    <fmt:message key="menu.usuarios" bundle="${msg}"/>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/logout">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <fmt:message key="menu.logout" bundle="${msg}"/>
+                </a>
+            </li>
         </ul>
     </nav>
 </aside>
