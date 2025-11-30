@@ -19,6 +19,13 @@
         <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
         <fmt:setBundle basename="messages" var="msg"/>
 
+        <c:if test="${not empty param.layout}">
+            <c:set var="layoutVersion" value="${param.layout}" scope="session"/>
+        </c:if>
+        <c:if test="${empty sessionScope.layoutVersion}">
+            <c:set var="layoutVersion" value="v1" scope="session"/>
+        </c:if>
+
         <% 
             // Solo UNA vez declaramos estas variables
             String vistaDinamicaJSP = (String) request.getAttribute("vistaDinamica");
@@ -37,41 +44,45 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
     </head>
     <body>
-      <aside id="sidebar"><%@ include file="/WEB-INF/jspf/sidebar.jspf" %></aside>
-      <div id="dynamic-content">
-        <header id="header"><%@ include file="/WEB-INF/jspf/header.jspf" %></header>
-        <section id="main">
-            <%
-              String flashSuccess = (String) session.getAttribute("flashSuccess");
-              String flashError = (String) session.getAttribute("flashError");
-              if (flashSuccess != null) { request.setAttribute("flashSuccess", flashSuccess); session.removeAttribute("flashSuccess"); }
-              if (flashError != null) { request.setAttribute("flashError", flashError); session.removeAttribute("flashError"); }
-            %>
-            <c:if test="${not empty flashSuccess}">
-                <div class="alert success">${flashSuccess}</div>
-            </c:if>
-            <c:if test="${not empty flashError}">
-                <div class="alert error">${flashError}</div>
-            </c:if>
-            <c:if test="${not empty vistaDinamica}">
-                <%@ include file="/WEB-INF/jspf/contenido-dinamico.jspf" %>
-            </c:if>
-        </section>
-      </div>
-        <aside id="sidebar">
-            <%@ include file="/WEB-INF/jspf/sidebar.jspf" %>
-        </aside>
-
-        <div id="dynamic-content">
-            <header id="header">
-                <%@ include file="/WEB-INF/jspf/header.jspf" %>
-            </header>
-
+      <c:choose>
+        <c:when test="${sessionScope.layoutVersion eq 'v1'}">
+          <aside id="sidebar"><%@ include file="/WEB-INF/jspf/sidebar.jspf" %></aside>
+          <div id="dynamic-content">
+            <header id="header"><%@ include file="/WEB-INF/jspf/header.jspf" %></header>
             <section id="main">
+                <%
+                  String flashSuccess = (String) session.getAttribute("flashSuccess");
+                  String flashError = (String) session.getAttribute("flashError");
+                  if (flashSuccess != null) { request.setAttribute("flashSuccess", flashSuccess); session.removeAttribute("flashSuccess"); }
+                  if (flashError != null) { request.setAttribute("flashError", flashError); session.removeAttribute("flashError"); }
+                %>
+                <c:if test="${not empty flashSuccess}">
+                    <div class="alert success">${flashSuccess}</div>
+                </c:if>
+                <c:if test="${not empty flashError}">
+                    <div class="alert error">${flashError}</div>
+                </c:if>
                 <c:if test="${not empty vistaDinamica}">
                     <%@ include file="/WEB-INF/jspf/contenido-dinamico.jspf" %>
                 </c:if>
             </section>
-        </div>
+          </div>
+        </c:when>
+        <c:otherwise>
+          <aside id="sidebar">
+              <%@ include file="/WEB-INF/jspf/sidebar.jspf" %>
+          </aside>
+          <div id="dynamic-content">
+              <header id="header">
+                  <%@ include file="/WEB-INF/jspf/header.jspf" %>
+              </header>
+              <section id="main">
+                  <c:if test="${not empty vistaDinamica}">
+                      <%@ include file="/WEB-INF/jspf/contenido-dinamico.jspf" %>
+                  </c:if>
+              </section>
+          </div>
+        </c:otherwise>
+      </c:choose>
     </body>
 </html>
