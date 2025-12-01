@@ -2,7 +2,6 @@ package com.grupo5.gestioninventario.servlet;
 
 import com.grupo5.gestioninventario.modelo.Movimiento;
 import com.grupo5.gestioninventario.modelo.Producto;
-import com.grupo5.gestioninventario.modelo.TipoMovimiento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
