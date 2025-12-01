@@ -3,7 +3,6 @@ package com.grupo5.gestioninventario.servlet;
 import com.grupo5.gestioninventario.modelo.Movimiento;
 import com.grupo5.gestioninventario.modelo.Producto;
 import com.grupo5.gestioninventario.modelo.TipoMovimiento;
-import com.grupo5.gestioninventario.repositorio.Implementaciones.JPARepositorioMovimiento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -23,7 +22,6 @@ public class MovimientoEliminarServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-        new JPARepositorioMovimiento(emf);
     }
 
     @Override
@@ -59,23 +57,30 @@ public class MovimientoEliminarServlet extends HttpServlet {
                 return;
             }
 
-            if (m.getTipo() == TipoMovimiento.entrada) {
-                if (p.getStock() < m.getCantidad()) {
-                    em.getTransaction().rollback();
-                    session.setAttribute("flashError", "No se puede revertir entrada: stock actual insuficiente");
-                    response.sendRedirect(request.getContextPath() + "/movimientos");
-                    return;
-                }
-                p.setStock(p.getStock() - m.getCantidad());
-                em.merge(p);
-            } else if (m.getTipo() == TipoMovimiento.salida) {
-                p.setStock(p.getStock() + m.getCantidad());
-                em.merge(p);
-            } else {
+            if (null == m.getTipo()) {
                 em.getTransaction().rollback();
                 session.setAttribute("flashError", "Eliminación no disponible para transferencias");
                 response.sendRedirect(request.getContextPath() + "/movimientos");
                 return;
+            } else switch (m.getTipo()) {
+                case entrada:
+                    if (p.getStock() < m.getCantidad()) {
+                        em.getTransaction().rollback();
+                        session.setAttribute("flashError", "No se puede revertir entrada: stock actual insuficiente");
+                        response.sendRedirect(request.getContextPath() + "/movimientos");
+                        return;
+                    }   p.setStock(p.getStock() - m.getCantidad());
+                    em.merge(p);
+                    break;
+                case salida:
+                    p.setStock(p.getStock() + m.getCantidad());
+                    em.merge(p);
+                    break;
+                default:
+                    em.getTransaction().rollback();
+                    session.setAttribute("flashError", "Eliminación no disponible para transferencias");
+                    response.sendRedirect(request.getContextPath() + "/movimientos");
+                    return;
             }
 
             Movimiento ref = em.find(Movimiento.class, id);
