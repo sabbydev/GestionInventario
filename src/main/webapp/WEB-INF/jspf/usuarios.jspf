@@ -34,8 +34,13 @@
                         </c:choose>
                     </td>
                     <td class="acciones">
-                        <button class="btn-editar"><i class="fa fa-pen"></i></button>
-                        <button class="btn-eliminar"><i class="fa fa-trash"></i></button>
+                        <a href="${pageContext.request.contextPath}/usuarios/editar?id=${u.id}" class="btn-editar" title="<fmt:message key='accion.editar' bundle='${msg}'/>"><i class="fa fa-pen"></i></a>
+                        <form action="${pageContext.request.contextPath}/usuarios/eliminar" method="post" style="display:inline;" onsubmit="return confirm('¿Eliminar este usuario?');">
+                            <input type="hidden" name="id" value="${u.id}" />
+                            <button type="submit" class="btn-eliminar" title="<fmt:message key='accion.eliminar' bundle='${msg}'/>">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>

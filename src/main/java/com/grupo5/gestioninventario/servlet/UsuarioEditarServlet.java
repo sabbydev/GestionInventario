@@ -10,12 +10,15 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet("/usuarios/nuevo")
-public class UsuarioNuevoServlet extends HttpServlet {
+@WebServlet("/usuarios/editar")
+public class UsuarioEditarServlet extends HttpServlet {
 
     private EntityManagerFactory emf;
     private IRepositorioRol repoRol;
@@ -36,7 +39,14 @@ public class UsuarioNuevoServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
+        String idStr = request.getParameter("id");
+        Optional<Usuario> ou = repoUsuario.findById(Integer.valueOf(idStr));
+        if (ou.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/usuarios");
+            return;
+        }
         request.setAttribute("vistaDinamica", "usuario-form");
+        request.setAttribute("usuario", ou.get());
         request.setAttribute("roles", repoRol.findAll());
         request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
     }
@@ -49,6 +59,14 @@ public class UsuarioNuevoServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
+        String idStr = request.getParameter("id");
+        Optional<Usuario> ou = repoUsuario.findById(Integer.valueOf(idStr));
+        if (ou.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/usuarios");
+            return;
+        }
+        Usuario u = ou.get();
+
         String nombre = request.getParameter("nombre");
         String correo = request.getParameter("correo");
         String contraseña = request.getParameter("password");
@@ -58,27 +76,29 @@ public class UsuarioNuevoServlet extends HttpServlet {
         String error = null;
         if (nombre == null || nombre.isBlank()) error = "Nombre requerido";
         if (error == null && (correo == null || correo.isBlank())) error = "Correo requerido";
-        if (error == null && (contraseña == null || contraseña.isBlank())) error = "Contraseña requerida";
         if (error == null && (rolIdStr == null || rolIdStr.isBlank())) error = "Rol requerido";
 
         if (error != null) {
             request.setAttribute("flashError", error);
+            request.setAttribute("usuario", u);
             request.setAttribute("roles", repoRol.findAll());
             request.setAttribute("vistaDinamica", "usuario-form");
             request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
             return;
         }
 
-        Usuario u = new Usuario();
         u.setNombre(nombre);
         u.setCorreo(correo);
-        u.setContraseña(contraseña);
+        if (contraseña != null && !contraseña.isBlank()) {
+            u.setContraseña(contraseña);
+        }
         u.setEstado("activo".equalsIgnoreCase(estadoStr));
         Optional<Rol> or = repoRol.findById(Integer.valueOf(rolIdStr));
         u.setRol(or.orElse(null));
 
-        repoUsuario.save(u);
-        session.setAttribute("flashSuccess", "Usuario creado");
+        repoUsuario.update(u);
+        session.setAttribute("flashSuccess", "Usuario actualizado");
         response.sendRedirect(request.getContextPath() + "/usuarios");
     }
 }
+

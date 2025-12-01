@@ -6,33 +6,36 @@
 </head>
 
 <section class="tabla-container">
-    <h2><fmt:message key="usuarios.nuevo" bundle="${msg}"/></h2>
-    <form action="${pageContext.request.contextPath}/usuarios/nuevo" method="post" class="form-usuario">
+    <h2>${usuario != null ? 'Editar Usuario' : 'Nuevo Usuario'}</h2>
+    <form action="${pageContext.request.contextPath}/usuarios/${usuario != null ? 'editar' : 'nuevo'}" method="post" class="form-usuario">
+        <c:if test="${usuario != null}">
+            <input type="hidden" name="id" value="${usuario.id}" />
+        </c:if>
         <div class="form-row">
             <label for="nombre"><fmt:message key="col.nombre" bundle="${msg}"/></label>
-            <input type="text" id="nombre" name="nombre" required>
+            <input type="text" id="nombre" name="nombre" value="${usuario != null ? usuario.nombre : ''}" required>
         </div>
         <div class="form-row">
             <label for="correo"><fmt:message key="col.correo" bundle="${msg}"/></label>
-            <input type="email" id="correo" name="correo" required>
+            <input type="email" id="correo" name="correo" value="${usuario != null ? usuario.correo : ''}" required>
         </div>
         <div class="form-row">
-            <label for="contraseña"><fmt:message key="usuarios.contraseña" bundle="${msg}"/></label>
-            <input type="password" id="contraseña" name="contraseña" required>
+            <label for="password"><fmt:message key="usuarios.contraseña" bundle="${msg}"/></label>
+            <input type="password" id="password" name="password" required>
         </div>
         <div class="form-row">
             <label for="id_rol"><fmt:message key="col.rol" bundle="${msg}"/></label>
             <select id="id_rol" name="id_rol" required>
                 <c:forEach var="r" items="${roles}">
-                    <option value="${r.id}">${r.nombre}</option>
+                    <option value="${r.id}" ${usuario != null && usuario.rol != null && r.id == usuario.rol.id ? 'selected' : ''}>${r.nombre}</option>
                 </c:forEach>
             </select>
         </div>
         <div class="form-row">
             <label for="estado"><fmt:message key="col.estado" bundle="${msg}"/></label>
             <select id="estado" name="estado">
-                <option value="activo"><fmt:message key="estado.activo" bundle="${msg}"/></option>
-                <option value="inactivo"><fmt:message key="estado.inactivo" bundle="${msg}"/></option>
+                <option value="activo" ${usuario != null && usuario.estado ? 'selected' : ''}><fmt:message key="estado.activo" bundle="${msg}"/></option>
+                <option value="inactivo" ${usuario != null && !usuario.estado ? 'selected' : ''}><fmt:message key="estado.inactivo" bundle="${msg}"/></option>
             </select>
         </div>
         <div class="form-actions">
