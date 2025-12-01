@@ -2,21 +2,21 @@
 const barChart = new Chart(document.getElementById("barChart"), {
     type: "bar",
     data: {
-        labels: ["Lubricantes", "Eléctrico", "Herramientas", "Suspensión", "Motor", "Accesorios"],
+        labels: window.REPORTES_DATA.labelsCategorias,
         datasets: [
             {
                 label: "Entradas",
-                data: [80, 60, 40, 20, 55, 35],
+                data: window.REPORTES_DATA.entradas,
                 backgroundColor: "#007bff"
             },
             {
                 label: "Salidas",
-                data: [40, 30, 20, 10, 25, 15],
+                data: window.REPORTES_DATA.salidas,
                 backgroundColor: "#ffc107"
             },
             {
-                label: "Devoluciones",
-                data: [15, 10, 5, 3, 8, 4],
+                label: "Transferencias",
+                data: window.REPORTES_DATA.transferencias,
                 backgroundColor: "#28a745"
             }
         ]
@@ -44,9 +44,9 @@ const barChart = new Chart(document.getElementById("barChart"), {
 const pieChart = new Chart(document.getElementById("pieChart"), {
     type: "pie",
     data: {
-        labels: ["Lubricantes", "Eléctrico", "Herramientas", "Suspensión", "Motor", "Accesorios"],
+        labels: window.REPORTES_DATA.labelsCategorias,
         datasets: [{
-            data: [30, 20, 15, 10, 15, 10],
+            data: window.REPORTES_DATA.stockPorCategoria,
             backgroundColor: ["#007bff", "#28a745", "#ffc107", "#dc3545", "#17a2b8", "#6f42c1"]
         }]
     },
@@ -65,10 +65,10 @@ const pieChart = new Chart(document.getElementById("pieChart"), {
 const stockChart = new Chart(document.getElementById("stockChart"), {
     type: "bar",
     data: {
-        labels: ["Amortiguador", "Llave inglesa", "Filtro aceite", "Pastillas freno", "Bujías", "Correa alternador"],
+        labels: window.REPORTES_DATA.bajoStockLabels,
         datasets: [{
             label: "Stock disponible",
-            data: [8, 12, 15, 9, 10, 11],
+            data: window.REPORTES_DATA.bajoStockValores,
             backgroundColor: "#dc3545"
         }]
     },
@@ -90,3 +90,47 @@ const stockChart = new Chart(document.getElementById("stockChart"), {
         }
     }
 });
+
+(function(){
+  const actualizarBtn = document.getElementById('btnActualizar');
+  const exportarBtn = document.getElementById('btnExportar');
+  const fechaInicio = document.getElementById('fechaInicio');
+  const fechaFin = document.getElementById('fechaFin');
+  const tipoSel = document.getElementById('tipoMovimiento');
+  function applyTipo(){
+    const v = tipoSel ? tipoSel.value : 'todos';
+    barChart.data.datasets.forEach(ds => ds.hidden = false);
+    if (v === 'entrada') {
+      barChart.data.datasets[1].hidden = true;
+      barChart.data.datasets[2].hidden = true;
+    } else if (v === 'salida') {
+      barChart.data.datasets[0].hidden = true;
+      barChart.data.datasets[2].hidden = true;
+    } else if (v === 'transferencia') {
+      barChart.data.datasets[0].hidden = true;
+      barChart.data.datasets[1].hidden = true;
+    }
+    barChart.update();
+  }
+  if (tipoSel) tipoSel.addEventListener('change', applyTipo);
+  applyTipo();
+  if (actualizarBtn) {
+    actualizarBtn.addEventListener('click', function(){
+      const params = new URLSearchParams();
+      if (fechaInicio && fechaInicio.value) params.set('fechaInicio', fechaInicio.value);
+      if (fechaFin && fechaFin.value) params.set('fechaFin', fechaFin.value);
+      const url = window.location.pathname + (params.toString() ? ('?' + params.toString()) : '');
+      window.location.assign(url);
+    });
+  }
+  if (exportarBtn) {
+    exportarBtn.addEventListener('click', function(){
+      const params = new URLSearchParams();
+      if (fechaInicio && fechaInicio.value) params.set('fechaInicio', fechaInicio.value);
+      if (fechaFin && fechaFin.value) params.set('fechaFin', fechaFin.value);
+      const base = window.location.pathname.endsWith('/reportes') ? window.location.pathname : (window.location.pathname.replace(/\/?$/, '') + '/reportes');
+      const url = base + '/exportar' + (params.toString() ? ('?' + params.toString()) : '');
+      window.location.assign(url);
+    });
+  }
+})();

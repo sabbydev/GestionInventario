@@ -43,7 +43,10 @@ public class LoginServlet extends HttpServlet {
 
         if (usuario != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("usuario", usuario);
+            session.setAttribute("usuarioId", usuario.getId());
+            session.setAttribute("usuarioCorreo", usuario.getCorreo());
+            session.setAttribute("usuarioNombre", usuario.getNombre());
+            session.setAttribute("usuarioRol", usuario.getRol() != null ? usuario.getRol().getNombre() : null);
             response.sendRedirect(request.getContextPath() + "/dashboard");
         } else {
             response.sendRedirect(request.getContextPath() + "/login?error=true");

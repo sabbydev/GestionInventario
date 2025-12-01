@@ -28,6 +28,9 @@
   <c:when test="${vistaDinamica eq 'usuarios'}">
       <%@ include file="/WEB-INF/jspf/usuarios.jspf" %>
   </c:when>
+  <c:when test="${vistaDinamica eq 'usuario-form'}">
+      <%@ include file="/WEB-INF/jspf/usuario-form.jspf" %>
+  </c:when>
   <c:when test="${vistaDinamica eq 'producto-form'}">
       <%@ include file="/WEB-INF/jspf/producto-form.jspf" %>
   </c:when>

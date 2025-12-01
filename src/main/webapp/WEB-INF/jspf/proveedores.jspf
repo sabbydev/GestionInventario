@@ -7,23 +7,23 @@
 </head>
 <section class="proveedores-container">
     <div class="toolbar">
-        <a href="${pageContext.request.contextPath}/proveedores/nuevo" class="btn-nuevo"><i class="fa fa-plus"></i> Nuevo Proveedor</a>
+        <a href="${pageContext.request.contextPath}/proveedores/nuevo" class="btn-nuevo"><i class="fa fa-plus"></i> <fmt:message key="proveedores.nuevo" bundle="${msg}"/></a>
         <form action="${pageContext.request.contextPath}/proveedores" method="get" style="display:inline;">
-            <input type="text" name="q" class="buscador" placeholder="Buscar proveedor..." value="${q}">
-            <button type="submit" class="btn-nuevo"><i class="fa fa-search"></i> Buscar</button>
+            <input type="text" name="q" class="buscador" placeholder="<fmt:message key='proveedores.search.placeholder' bundle='${msg}'/>" value="${q}">
+            <button type="submit" class="btn-nuevo"><i class="fa fa-search"></i> <fmt:message key="accion.buscar" bundle="${msg}"/></button>
         </form>
     </div>
 
     <table class="tabla-proveedores">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Contacto</th>
-                <th>Teléfono</th>
-                <th>Correo</th>
-                <th>Dirección</th>
-                <th>Acciones</th>
+                <th><fmt:message key="col.id" bundle="${msg}"/></th>
+                <th><fmt:message key="col.nombre" bundle="${msg}"/></th>
+                <th><fmt:message key="col.contacto" bundle="${msg}"/></th>
+                <th><fmt:message key="col.telefono" bundle="${msg}"/></th>
+                <th><fmt:message key="col.correo" bundle="${msg}"/></th>
+                <th><fmt:message key="col.direccion" bundle="${msg}"/></th>
+                <th><fmt:message key="col.acciones" bundle="${msg}"/></th>
             </tr>
         </thead>
         <tbody>
@@ -36,10 +36,10 @@
                     <td>${p.correo}</td>
                     <td>${p.direccion}</td>
                     <td class="acciones">
-                        <a href="${pageContext.request.contextPath}/proveedores/editar?id=${p.id}" class="btn-editar" title="Editar"><i class="fa fa-pen"></i></a>
+                        <a href="${pageContext.request.contextPath}/proveedores/editar?id=${p.id}" class="btn-editar" title="<fmt:message key='accion.editar' bundle='${msg}'/>"><i class="fa fa-pen"></i></a>
                         <form action="${pageContext.request.contextPath}/proveedores/eliminar" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="${p.id}" />
-                            <button type="submit" class="btn-eliminar" title="Eliminar" style="background:none;border:none;cursor:pointer;">
+                            <button type="submit" class="btn-eliminar" title="<fmt:message key='accion.eliminar' bundle='${msg}'/>" style="background:none;border:none;cursor:pointer;">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </form>
@@ -50,9 +50,9 @@
     </table>
     <div class="paginacion">
         <c:if test="${pages > 1}">
-            <a href="${pageContext.request.contextPath}/proveedores?q=${q}&page=${page > 1 ? page - 1 : 1}&size=${size}">Anterior</a>
-            <span>Página ${page} de ${pages}</span>
-            <a href="${pageContext.request.contextPath}/proveedores?q=${q}&page=${page < pages ? page + 1 : pages}&size=${size}">Siguiente</a>
+            <a href="${pageContext.request.contextPath}/proveedores?q=${q}&page=${page > 1 ? page - 1 : 1}&size=${size}"><fmt:message key="paginacion.anterior" bundle="${msg}"/></a>
+            <span><fmt:message key="paginacion.pagina" bundle="${msg}"/> ${page} <fmt:message key="paginacion.de" bundle="${msg}"/> ${pages}</span>
+            <a href="${pageContext.request.contextPath}/proveedores?q=${q}&page=${page < pages ? page + 1 : pages}&size=${size}"><fmt:message key="paginacion.siguiente" bundle="${msg}"/></a>
         </c:if>
     </div>
 </section>

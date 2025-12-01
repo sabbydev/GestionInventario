@@ -25,7 +25,7 @@ public class ProveedoresServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }

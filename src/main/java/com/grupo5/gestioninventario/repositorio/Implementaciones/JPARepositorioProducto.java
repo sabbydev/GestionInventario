@@ -101,4 +101,31 @@ public class JPARepositorioProducto implements IRepositorioProducto {
              .getSingleResult();
         } finally { em.close(); }
     }
+
+    public Map<String, Long> sumarStockPorCategoria() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            List<Object[]> rows = em.createQuery(
+                "select coalesce(c.nombre, 'Sin categoría'), sum(p.stock) from Producto p left join p.categoria c group by c.nombre",
+                Object[].class
+            ).getResultList();
+            Map<String, Long> res = new LinkedHashMap<>();
+            for (Object[] r : rows) {
+                String categoria = (String) r[0];
+                Long total = ((Number) r[1]).longValue();
+                res.put(categoria, total);
+            }
+            return res;
+        } finally { em.close(); }
+    }
+
+    public List<Object[]> topBajoStock(int limit) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery(
+                "select p.nombre, p.stock from Producto p order by p.stock asc",
+                Object[].class
+            ).setMaxResults(Math.max(1, limit)).getResultList();
+        } finally { em.close(); }
+    }
 }

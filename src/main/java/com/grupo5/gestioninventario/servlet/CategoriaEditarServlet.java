@@ -30,7 +30,7 @@ public class CategoriaEditarServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
@@ -49,7 +49,7 @@ public class CategoriaEditarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }

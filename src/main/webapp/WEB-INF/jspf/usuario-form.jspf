@@ -1,0 +1,43 @@
+<%@ page pageEncoding="UTF-8" %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/usuarios.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<section class="tabla-container">
+    <h2><fmt:message key="usuarios.nuevo" bundle="${msg}"/></h2>
+    <form action="${pageContext.request.contextPath}/usuarios/nuevo" method="post" class="form-usuario">
+        <div class="form-row">
+            <label for="nombre"><fmt:message key="col.nombre" bundle="${msg}"/></label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-row">
+            <label for="correo"><fmt:message key="col.correo" bundle="${msg}"/></label>
+            <input type="email" id="correo" name="correo" required>
+        </div>
+        <div class="form-row">
+            <label for="contraseña"><fmt:message key="usuarios.contraseña" bundle="${msg}"/></label>
+            <input type="password" id="contraseña" name="contraseña" required>
+        </div>
+        <div class="form-row">
+            <label for="id_rol"><fmt:message key="col.rol" bundle="${msg}"/></label>
+            <select id="id_rol" name="id_rol" required>
+                <c:forEach var="r" items="${roles}">
+                    <option value="${r.id}">${r.nombre}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="estado"><fmt:message key="col.estado" bundle="${msg}"/></label>
+            <select id="estado" name="estado">
+                <option value="activo"><fmt:message key="estado.activo" bundle="${msg}"/></option>
+                <option value="inactivo"><fmt:message key="estado.inactivo" bundle="${msg}"/></option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-nuevo"><i class="fa fa-save"></i> <fmt:message key="accion.guardar" bundle="${msg}"/></button>
+            <a href="${pageContext.request.contextPath}/usuarios" class="btn-nuevo"><i class="fa fa-times"></i> <fmt:message key="accion.cancelar" bundle="${msg}"/></a>
+        </div>
+    </form>
+</section>

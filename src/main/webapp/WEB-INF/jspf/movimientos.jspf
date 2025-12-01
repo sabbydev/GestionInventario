@@ -11,30 +11,30 @@
         <i class="fa fa-arrow-down"></i>
         <div>
             <h3>${resumenEntradas}</h3>
-            <p>Entradas registradas</p>
+            <p><fmt:message key="movimientos.entradasRegistradas" bundle="${msg}"/></p>
         </div>
     </div>
     <div class="card resumen salidas">
         <i class="fa fa-arrow-up"></i>
         <div>
             <h3>${resumenSalidas}</h3>
-            <p>Salidas realizadas</p>
+            <p><fmt:message key="movimientos.salidasRealizadas" bundle="${msg}"/></p>
         </div>
     </div>
     <div class="card resumen total">
         <i class="fa fa-list"></i>
         <div>
             <h3>${resumenTotal}</h3>
-            <p>Total de movimientos</p>
+            <p><fmt:message key="movimientos.total" bundle="${msg}"/></p>
         </div>
     </div>
 </section>
 
 <section class="form-movimiento">
-    <h2><i class="fa fa-exchange-alt"></i> Registrar Movimiento</h2>
+    <h2><i class="fa fa-exchange-alt"></i> <fmt:message key="movimientos.registrar" bundle="${msg}"/></h2>
     <form action="${pageContext.request.contextPath}/movimientos" method="post" class="form-mov">
         <div class="form-row">
-            <label for="id_producto">Producto</label>
+            <label for="id_producto"><fmt:message key="col.producto" bundle="${msg}"/></label>
             <select id="id_producto" name="id_producto" required>
                 <c:forEach var="p" items="${productos}">
                     <option value="${p.id}">${p.nombre}</option>
@@ -42,18 +42,27 @@
             </select>
         </div>
         <div class="form-row">
-            <label for="tipo">Tipo</label>
+            <label for="tipo"><fmt:message key="col.tipo" bundle="${msg}"/></label>
             <select id="tipo" name="tipo" required>
-                <option value="entrada">Entrada</option>
-                <option value="salida">Salida</option>
+                <option value="entrada"><fmt:message key="mov.tipo.entrada" bundle="${msg}"/></option>
+                <option value="salida"><fmt:message key="mov.tipo.salida" bundle="${msg}"/></option>
+                <option value="transferencia"><fmt:message key="mov.tipo.transferencia" bundle="${msg}"/></option>
+            </select>
+        </div>
+        <div class="form-row" id="row-destino" style="display:none;">
+            <label for="id_producto_destino"><fmt:message key="mov.productoDestino" bundle="${msg}"/></label>
+            <select id="id_producto_destino" name="id_producto_destino">
+                <c:forEach var="p" items="${productos}">
+                    <option value="${p.id}">${p.nombre}</option>
+                </c:forEach>
             </select>
         </div>
         <div class="form-row">
-            <label for="cantidad">Cantidad</label>
+            <label for="cantidad"><fmt:message key="col.cantidad" bundle="${msg}"/></label>
             <input type="number" id="cantidad" name="cantidad" min="1" required>
         </div>
         <div class="form-actions">
-            <button type="submit" class="btn-accion"><i class="fa fa-save"></i> Registrar</button>
+            <button type="submit" class="btn-accion"><i class="fa fa-save"></i> <fmt:message key="accion.registrar" bundle="${msg}"/></button>
         </div>
     </form>
     <c:if test="${not empty errorMovimiento}">
@@ -66,29 +75,29 @@
 
 <!-- === Barra de filtros === -->
 <section class="report-toolbar">
-    <label>Desde:</label>
+    <label><fmt:message key="filtros.desde" bundle="${msg}"/>:</label>
     <input type="date" id="fechaInicio">
-    <label>Hasta:</label>
+    <label><fmt:message key="filtros.hasta" bundle="${msg}"/>:</label>
     <input type="date" id="fechaFin">
-    <label>Tipo:</label>
+    <label><fmt:message key="col.tipo" bundle="${msg}"/>:</label>
     <select id="tipoMovimiento">
-        <option value="todos">Todos</option>
-        <option value="entrada">Entrada</option>
-        <option value="salida">Salida</option>
+        <option value="todos"><fmt:message key="filtros.todos" bundle="${msg}"/></option>
+        <option value="entrada"><fmt:message key="mov.tipo.entrada" bundle="${msg}"/></option>
+        <option value="salida"><fmt:message key="mov.tipo.salida" bundle="${msg}"/></option>
     </select>
-    <button class="btn-accion"><i class="fa fa-search"></i> Filtrar</button>
-    <button class="btn-accion"><i class="fa fa-file-pdf"></i> Exportar PDF</button>
+    <button class="btn-accion"><i class="fa fa-search"></i> <fmt:message key="accion.filtrar" bundle="${msg}"/></button>
+    <button class="btn-accion"><i class="fa fa-file-pdf"></i> <fmt:message key="accion.exportarPdf" bundle="${msg}"/></button>
 </section>
 
 <!-- === Gráficos === -->
 <section class="report-container">
     <div class="chart-box">
-        <h2><i class="fa fa-chart-bar"></i> Entradas y Salidas por Mes</h2>
+        <h2><i class="fa fa-chart-bar"></i> <fmt:message key="movimientos.chart.mes" bundle="${msg}"/></h2>
         <canvas id="movimientosBar"></canvas>
     </div>
 
     <div class="chart-box">
-        <h2><i class="fa fa-chart-line"></i> Tendencia de Movimientos</h2>
+        <h2><i class="fa fa-chart-line"></i> <fmt:message key="movimientos.chart.tendencia" bundle="${msg}"/></h2>
         <canvas id="movimientosLine"></canvas>
     </div>
 </section>
@@ -96,15 +105,15 @@
 <!-- === Tabla Detalle === -->
 <section class="detalle-inventario">
     <div class="tabla">
-        <h2><i class="fa fa-list"></i> Detalle de Movimientos</h2>
+        <h2><i class="fa fa-list"></i> <fmt:message key="movimientos.detalle" bundle="${msg}"/></h2>
         <table>
             <thead>
                 <tr>
-                    <th>Fecha</th>
-                    <th>Producto</th>
-                    <th>Tipo</th>
-                    <th>Cantidad</th>
-                    <th>Usuario</th>
+                    <th><fmt:message key="col.fecha" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.producto" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.tipo" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.cantidad" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.usuario" bundle="${msg}"/></th>
                 </tr>
             </thead>
             <tbody>
@@ -124,6 +133,20 @@
 
 <!-- === Scripts de Chart.js === -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  (function(){
+    const tipoSel = document.getElementById('tipo');
+    const rowDestino = document.getElementById('row-destino');
+    function updateDestino(){
+      if (!tipoSel) return;
+      rowDestino.style.display = tipoSel.value === 'transferencia' ? 'block' : 'none';
+    }
+    if (tipoSel) {
+      tipoSel.addEventListener('change', updateDestino);
+      updateDestino();
+    }
+  })();
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 

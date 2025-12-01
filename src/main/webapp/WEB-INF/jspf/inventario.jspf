@@ -9,27 +9,28 @@
 <!-- Barra de búsqueda -->
 <section class="search-bar">
     <form action="${pageContext.request.contextPath}/inventario" method="get">
-        <input type="text" name="q" placeholder="Buscar repuesto..." value="${q}">
-        <button type="submit"><i class="fa fa-search"></i> Buscar</button>
+        <input type="text" name="q" placeholder="<fmt:message key='inventario.search.placeholder' bundle='${msg}'/>" value="${q}">
+        <button type="submit"><i class="fa fa-search"></i> <fmt:message key="accion.buscar" bundle="${msg}"/></button>
     </form>
     <a href="${pageContext.request.contextPath}/productos/nuevo" class="btn-add">
-        <i class="fa fa-plus"></i> Nuevo Repuesto
+        <i class="fa fa-plus"></i> <fmt:message key="inventario.nuevoRepuesto" bundle="${msg}"/>
     </a>
 </section>
 
 <!-- Tabla de inventario -->
 <section class="inventory-table">
-    <h2>Listado de Repuestos en Inventario</h2>
+    <h2><fmt:message key="inventario.titulo" bundle="${msg}"/></h2>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Proveedor</th>
-                <th>Stock</th>
-                <th>Precio</th>
-                <th>Acciones</th>
+                <th><fmt:message key="col.id" bundle="${msg}"/></th>
+                <th><fmt:message key="col.nombre" bundle="${msg}"/></th>
+                <th><fmt:message key="col.categoria" bundle="${msg}"/></th>
+                <th><fmt:message key="col.proveedor" bundle="${msg}"/></th>
+                <th><fmt:message key="col.precio" bundle="${msg}"/></th>
+                <th><fmt:message key="col.stock" bundle="${msg}"/></th>
+                <th><fmt:message key="col.docs" bundle="${msg}"/></th>
+                <th><fmt:message key="col.acciones" bundle="${msg}"/></th>
             </tr>
         </thead>
         <tbody>
@@ -39,13 +40,18 @@
                     <td>${p.nombre}</td>
                     <td><c:out value="${p.categoria != null ? p.categoria.nombre : ''}" default="—"/></td>
                     <td><c:out value="${p.proveedor != null ? p.proveedor.nombre : ''}" default="—"/></td>
-                    <td>${p.stock}</td>
                     <td>S/. ${p.precio}</td>
+                    <td>${p.stock}</td>
+                    <td>
+                      <c:if test="${not empty p.imagenUrl}"><a href="${p.imagenUrl}" target="_blank" title="Imagen"><i class="fa fa-image"></i></a></c:if>
+                      <c:if test="${not empty p.fichaTecnicaUrl}"><a href="${p.fichaTecnicaUrl}" target="_blank" title="Ficha"><i class="fa fa-file-pdf"></i></a></c:if>
+                      <c:if test="${not empty p.manualUrl}"><a href="${p.manualUrl}" target="_blank" title="Manual"><i class="fa fa-book"></i></a></c:if>
+                    </td>
                     <td class="actions">
-                        <a href="${pageContext.request.contextPath}/productos/editar?id=${p.id}" class="edit" title="Editar"><i class="fa fa-edit"></i></a>
+                        <a href="${pageContext.request.contextPath}/productos/editar?id=${p.id}" class="edit" title="<fmt:message key='accion.editar' bundle='${msg}'/>"><i class="fa fa-edit"></i></a>
                         <form action="${pageContext.request.contextPath}/productos/eliminar" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="${p.id}" />
-                            <button type="submit" class="delete" title="Eliminar" style="background:none;border:none;cursor:pointer;">
+                            <button type="submit" class="delete" title="<fmt:message key='accion.eliminar' bundle='${msg}'/>" style="background:none;border:none;cursor:pointer;">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </form>
@@ -56,9 +62,9 @@
     </table>
     <div class="paginacion">
         <c:if test="${pages > 1}">
-            <a href="${pageContext.request.contextPath}/inventario?q=${q}&page=${page > 1 ? page - 1 : 1}&size=${size}">Anterior</a>
-            <span>Página ${page} de ${pages}</span>
-            <a href="${pageContext.request.contextPath}/inventario?q=${q}&page=${page < pages ? page + 1 : pages}&size=${size}">Siguiente</a>
+            <a href="${pageContext.request.contextPath}/inventario?q=${q}&page=${page > 1 ? page - 1 : 1}&size=${size}"><fmt:message key="paginacion.anterior" bundle="${msg}"/></a>
+            <span><fmt:message key="paginacion.pagina" bundle="${msg}"/> ${page} <fmt:message key="paginacion.de" bundle="${msg}"/> ${pages}</span>
+            <a href="${pageContext.request.contextPath}/inventario?q=${q}&page=${page < pages ? page + 1 : pages}&size=${size}"><fmt:message key="paginacion.siguiente" bundle="${msg}"/></a>
         </c:if>
     </div>
 </section>

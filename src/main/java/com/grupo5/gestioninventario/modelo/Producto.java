@@ -32,6 +32,15 @@ public class Producto {
     @JoinColumn(name = "id_proveedor")
     private Proveedor proveedor;
 
+    @Column(name = "imagen_url")
+    private String imagenUrl;
+
+    @Column(name = "ficha_tecnica_url")
+    private String fichaTecnicaUrl;
+
+    @Column(name = "manual_url")
+    private String manualUrl;
+
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -52,4 +61,11 @@ public class Producto {
 
     public Proveedor getProveedor() { return proveedor; }
     public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
+
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
+    public String getFichaTecnicaUrl() { return fichaTecnicaUrl; }
+    public void setFichaTecnicaUrl(String fichaTecnicaUrl) { this.fichaTecnicaUrl = fichaTecnicaUrl; }
+    public String getManualUrl() { return manualUrl; }
+    public void setManualUrl(String manualUrl) { this.manualUrl = manualUrl; }
 }

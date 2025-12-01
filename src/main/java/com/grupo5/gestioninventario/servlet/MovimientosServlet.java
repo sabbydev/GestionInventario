@@ -4,11 +4,12 @@ import com.grupo5.gestioninventario.repositorio.IRepositorioMovimiento;
 import com.grupo5.gestioninventario.repositorio.IRepositorioProducto;
 import com.grupo5.gestioninventario.repositorio.Implementaciones.JPARepositorioMovimiento;
 import com.grupo5.gestioninventario.repositorio.Implementaciones.JPARepositorioProducto;
-import com.grupo5.gestioninventario.modelo.Movimiento;
+import com.grupo5.gestioninventario.repositorio.IRepositorioUsuario;
+import com.grupo5.gestioninventario.repositorio.Implementaciones.JPARepositorioUsuario;
 import com.grupo5.gestioninventario.modelo.TipoMovimiento;
-import com.grupo5.gestioninventario.modelo.Producto;
 import com.grupo5.gestioninventario.modelo.Usuario;
-import java.sql.Timestamp;
+import com.grupo5.gestioninventario.servicio.InventarioFacade;
+import com.grupo5.gestioninventario.servicio.LoggerSistema;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.*;
@@ -22,12 +23,16 @@ public class MovimientosServlet extends HttpServlet {
     private EntityManagerFactory emf;
     private IRepositorioMovimiento repoMovimiento;
     private IRepositorioProducto repoProducto;
+    private InventarioFacade inventarioFacade;
+    private IRepositorioUsuario repoUsuario;
 
     @Override
     public void init() throws ServletException {
         emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         repoMovimiento = new JPARepositorioMovimiento(emf);
         repoProducto = new JPARepositorioProducto(emf);
+        inventarioFacade = new InventarioFacade(emf);
+        repoUsuario = new JPARepositorioUsuario(emf);
     }
 
     @Override
@@ -35,7 +40,7 @@ public class MovimientosServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
@@ -75,11 +80,12 @@ public class MovimientosServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
         String idProductoStr = request.getParameter("id_producto");
+        String idProductoDestinoStr = request.getParameter("id_producto_destino");
         String tipoStr = request.getParameter("tipo");
         String cantidadStr = request.getParameter("cantidad");
         int cantidad;
@@ -89,34 +95,26 @@ public class MovimientosServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/movimientos");
             return;
         }
-        Producto producto = repoProducto.findById(Integer.valueOf(idProductoStr)).orElse(null);
-        if (producto == null) {
-            session.setAttribute("flashError", "Producto no encontrado");
-            response.sendRedirect(request.getContextPath() + "/movimientos");
-            return;
+        try {
+            Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+            Usuario u = repoUsuario.findById(usuarioId).orElse(null);
+            if ("transferencia".equals(tipoStr)) {
+                Integer idOrigen = Integer.valueOf(idProductoStr);
+                Integer idDestino = Integer.valueOf(idProductoDestinoStr);
+                inventarioFacade.registrarTransferencia(idOrigen, idDestino, cantidad, u);
+                LoggerSistema.getInstance().info("Transferencia realizada por usuarioId=" + usuarioId + " origen=" + idOrigen + " destino=" + idDestino + " cantidad=" + cantidad);
+            } else if ("entrada".equals(tipoStr)) {
+                inventarioFacade.registrarEntrada(Integer.valueOf(idProductoStr), cantidad, u);
+                LoggerSistema.getInstance().info("Entrada registrada por usuarioId=" + usuarioId + " producto=" + idProductoStr + " cantidad=" + cantidad);
+            } else {
+                inventarioFacade.registrarSalida(Integer.valueOf(idProductoStr), cantidad, u);
+                LoggerSistema.getInstance().info("Salida registrada por usuarioId=" + usuarioId + " producto=" + idProductoStr + " cantidad=" + cantidad);
+            }
+            session.setAttribute("flashSuccess", "Movimiento registrado");
+        } catch (RuntimeException ex) {
+            LoggerSistema.getInstance().error("Error registrando movimiento: " + ex.getMessage(), ex);
+            session.setAttribute("flashError", ex.getMessage());
         }
-        if ("salida".equals(tipoStr) && producto.getStock() < cantidad) {
-            session.setAttribute("flashError", "Stock insuficiente");
-            response.sendRedirect(request.getContextPath() + "/movimientos");
-            return;
-        }
-        if ("entrada".equals(tipoStr)) {
-            producto.setStock(producto.getStock() + cantidad);
-        } else {
-            producto.setStock(producto.getStock() - cantidad);
-        }
-        repoProducto.update(producto);
-
-        Movimiento m = new Movimiento();
-        m.setProducto(producto);
-        m.setTipo("entrada".equals(tipoStr) ? TipoMovimiento.entrada : TipoMovimiento.salida);
-        m.setCantidad(cantidad);
-        m.setFecha(new Timestamp(System.currentTimeMillis()));
-        Usuario u = (Usuario) session.getAttribute("usuario");
-        m.setUsuario(u);
-        repoMovimiento.save(m);
-
-        session.setAttribute("flashSuccess", "Movimiento registrado");
         response.sendRedirect(request.getContextPath() + "/movimientos");
     }
 }

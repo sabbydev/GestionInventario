@@ -30,7 +30,7 @@ public class InventarioServlet extends HttpServlet {
         
         HttpSession session = request.getSession(false);
 
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }

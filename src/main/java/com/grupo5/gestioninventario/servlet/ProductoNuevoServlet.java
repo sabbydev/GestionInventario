@@ -12,15 +12,18 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Optional;
 
 @WebServlet("/productos/nuevo")
+@MultipartConfig
 public class ProductoNuevoServlet extends HttpServlet {
 
     private EntityManagerFactory emf;
@@ -40,7 +43,7 @@ public class ProductoNuevoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
@@ -54,7 +57,7 @@ public class ProductoNuevoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("usuarioId") == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
@@ -88,6 +91,32 @@ public class ProductoNuevoServlet extends HttpServlet {
         p.setStock(stock);
         p.setCategoria(categoria);
         p.setProveedor(proveedor);
+
+        String uploadDir = getServletContext().getRealPath("/uploads");
+        java.nio.file.Path dir = java.nio.file.Paths.get(uploadDir);
+        try { java.nio.file.Files.createDirectories(dir); } catch (IOException ignored) {}
+
+        Part imgPart = request.getPart("imagen");
+        if (imgPart != null && imgPart.getSize() > 0) {
+            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
+            java.nio.file.Path pth = dir.resolve(fn);
+            imgPart.write(pth.toString());
+            p.setImagenUrl(request.getContextPath() + "/uploads/" + fn);
+        }
+        Part fichaPart = request.getPart("ficha");
+        if (fichaPart != null && fichaPart.getSize() > 0) {
+            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(fichaPart.getSubmittedFileName()).getFileName().toString();
+            java.nio.file.Path pth = dir.resolve(fn);
+            fichaPart.write(pth.toString());
+            p.setFichaTecnicaUrl(request.getContextPath() + "/uploads/" + fn);
+        }
+        Part manualPart = request.getPart("manual");
+        if (manualPart != null && manualPart.getSize() > 0) {
+            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(manualPart.getSubmittedFileName()).getFileName().toString();
+            java.nio.file.Path pth = dir.resolve(fn);
+            manualPart.write(pth.toString());
+            p.setManualUrl(request.getContextPath() + "/uploads/" + fn);
+        }
 
         repoProducto.save(p);
         session.setAttribute("flashSuccess", "Producto creado");

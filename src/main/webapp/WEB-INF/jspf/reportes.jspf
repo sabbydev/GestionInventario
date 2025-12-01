@@ -7,43 +7,43 @@
 </head>
 
 <section class="report-toolbar">
-    <label>Desde:</label>
+    <label><fmt:message key="filtros.desde" bundle="${msg}"/>:</label>
     <input type="date" id="fechaInicio">
-    <label>Hasta:</label>
+    <label><fmt:message key="filtros.hasta" bundle="${msg}"/>:</label>
     <input type="date" id="fechaFin">
-    <label>Tipo:</label>
+    <label><fmt:message key="col.tipo" bundle="${msg}"/>:</label>
     <select id="tipoMovimiento">
-        <option value="todos">Todos</option>
-        <option value="entrada">Entrada</option>
-        <option value="salida">Salida</option>
+        <option value="todos"><fmt:message key="filtros.todos" bundle="${msg}"/></option>
+        <option value="entrada"><fmt:message key="mov.tipo.entrada" bundle="${msg}"/></option>
+        <option value="salida"><fmt:message key="mov.tipo.salida" bundle="${msg}"/></option>
     </select>
-    <button class="btn-accion"><i class="fa fa-refresh"></i> Actualizar</button>
-    <button class="btn-accion"><i class="fa fa-file-excel"></i> Exportar Excel</button>
+    <button class="btn-accion" id="btnActualizar"><i class="fa fa-refresh"></i> <fmt:message key="accion.actualizar" bundle="${msg}"/></button>
+    <button class="btn-accion" id="btnExportar"><i class="fa fa-file-excel"></i> <fmt:message key="accion.exportarExcel" bundle="${msg}"/></button>
 </section>
 
 <section class="report-container">
     <div class="chart-box">
-        <h2><i class="fa fa-chart-column"></i> Movimientos por Categoría</h2>
+        <h2><i class="fa fa-chart-column"></i> <fmt:message key="reportes.movimientosPorCategoria" bundle="${msg}"/></h2>
         <canvas id="barChart"></canvas>
     </div>
 
     <div class="chart-box">
-        <h2><i class="fa fa-chart-pie"></i> Distribución de Inventario</h2>
+        <h2><i class="fa fa-chart-pie"></i> <fmt:message key="reportes.distribucionInventario" bundle="${msg}"/></h2>
         <canvas id="pieChart"></canvas>
     </div>
 </section>
 
 <section class="detalle-inventario">
     <div class="tabla">
-        <h2><i class="fa fa-box"></i> Detalle de Inventario</h2>
+        <h2><i class="fa fa-box"></i> <fmt:message key="reportes.detalleInventario" bundle="${msg}"/></h2>
         <table>
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Proveedor</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
+                    <th><fmt:message key="col.nombre" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.categoria" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.proveedor" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.precio" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.stock" bundle="${msg}"/></th>
                 </tr>
             </thead>
             <tbody>
@@ -61,9 +61,20 @@
     </div>
 
     <div class="grafico">
-        <h2><i class="fa fa-chart-bar"></i> Productos con bajo stock</h2>
+        <h2><i class="fa fa-chart-bar"></i> <fmt:message key="reportes.bajoStock" bundle="${msg}"/></h2>
         <canvas id="stockChart"></canvas>
     </div>
 </section>
 
+<script>
+  window.REPORTES_DATA = {
+    labelsCategorias: ${labelsCategoriasJson},
+    entradas: ${entradasJson},
+    salidas: ${salidasJson},
+    transferencias: ${transferenciasJson},
+    stockPorCategoria: ${stockCategoriasJson},
+    bajoStockLabels: ${bajoStockLabelsJson},
+    bajoStockValores: ${bajoStockValoresJson}
+  };
+</script>
 <script src="${pageContext.request.contextPath}/js/reportes.js"></script>

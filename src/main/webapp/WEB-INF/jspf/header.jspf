@@ -11,14 +11,14 @@
         <i class="fa fa-bars"></i>
     </button>
 
-    <c:if test="${not empty usuario}">
+    <c:if test="${not empty sessionScope.usuarioNombre}">
         <h1>
             <fmt:message key="header.welcome" bundle="${msg}">
-                <fmt:param value="${usuario.nombre}"/>
+                <fmt:param value="${sessionScope.usuarioNombre}"/>
             </fmt:message>
         </h1>
     </c:if>
-    <c:if test="${empty usuario}">
+    <c:if test="${empty sessionScope.usuarioNombre}">
         <h1>
             <fmt:message key="header.welcome.guest" bundle="${msg}"/>
         </h1>

@@ -121,4 +121,27 @@ public class JPARepositorioMovimiento implements IRepositorioMovimiento {
             return res;
         } finally { em.close(); }
     }
+
+    public Map<String, Long> sumarCantidadPorCategoria(TipoMovimiento tipo, java.sql.Timestamp desde, java.sql.Timestamp hasta) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "select coalesce(c.nombre, 'Sin categoría'), sum(m.cantidad) " +
+                    "from Movimiento m left join m.producto p left join p.categoria c " +
+                    "where m.tipo = :t " +
+                    (desde != null ? "and m.fecha >= :desde " : "") +
+                    (hasta != null ? "and m.fecha <= :hasta " : "") +
+                    "group by c.nombre";
+            var q = em.createQuery(jpql, Object[].class).setParameter("t", tipo);
+            if (desde != null) q.setParameter("desde", desde);
+            if (hasta != null) q.setParameter("hasta", hasta);
+            List<Object[]> rows = q.getResultList();
+            Map<String, Long> res = new LinkedHashMap<>();
+            for (Object[] r : rows) {
+                String categoria = (String) r[0];
+                Long total = ((Number) r[1]).longValue();
+                res.put(categoria, total);
+            }
+            return res;
+        } finally { em.close(); }
+    }
 }
