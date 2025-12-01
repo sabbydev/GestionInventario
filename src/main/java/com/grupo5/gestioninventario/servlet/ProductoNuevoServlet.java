@@ -69,8 +69,38 @@ public class ProductoNuevoServlet extends HttpServlet {
         String categoriaIdStr = request.getParameter("id_categoria");
         String proveedorIdStr = request.getParameter("id_proveedor");
 
-        BigDecimal precio = new BigDecimal(precioStr);
-        Integer stock = Integer.valueOf(stockStr);
+        String error = null;
+        BigDecimal precio = null;
+        Integer stock = null;
+        if (nombre == null || nombre.isBlank()) {
+            error = "Nombre requerido";
+        }
+        if (error == null) {
+            if (precioStr == null || precioStr.isBlank()) {
+                error = "Precio requerido";
+            } else {
+                try { precio = new BigDecimal(precioStr); } catch (RuntimeException ex) { error = "Precio inválido"; }
+            }
+        }
+        if (error == null) {
+            if (stockStr == null || stockStr.isBlank()) {
+                error = "Stock requerido";
+            } else {
+                try { stock = Integer.valueOf(stockStr); } catch (RuntimeException ex) { error = "Stock inválido"; }
+            }
+        }
+        if (error != null) {
+            Producto p = new Producto();
+            p.setNombre(nombre);
+            p.setDescripcion(descripcion);
+            request.setAttribute("flashError", error);
+            request.setAttribute("producto", p);
+            request.setAttribute("categorias", repoCategoria.findAll());
+            request.setAttribute("proveedores", repoProveedor.findAll());
+            request.setAttribute("vistaDinamica", "producto-form");
+            request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
+            return;
+        }
 
         Categoria categoria = null;
         if (categoriaIdStr != null && !categoriaIdStr.isBlank()) {
@@ -92,8 +122,13 @@ public class ProductoNuevoServlet extends HttpServlet {
         p.setCategoria(categoria);
         p.setProveedor(proveedor);
 
-        String uploadDir = getServletContext().getRealPath("/uploads");
-        java.nio.file.Path dir = java.nio.file.Paths.get(uploadDir);
+        String uploadDirReal = getServletContext().getRealPath("/uploads");
+        java.nio.file.Path dir;
+        if (uploadDirReal == null) {
+            dir = java.nio.file.Paths.get(System.getProperty("java.io.tmpdir"), "uploads");
+        } else {
+            dir = java.nio.file.Paths.get(uploadDirReal);
+        }
         try { java.nio.file.Files.createDirectories(dir); } catch (IOException ignored) {}
 
         Part imgPart = request.getPart("imagen");

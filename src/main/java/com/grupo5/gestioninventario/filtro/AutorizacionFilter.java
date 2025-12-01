@@ -1,6 +1,5 @@
 package com.grupo5.gestioninventario.filtro;
 
-import com.grupo5.gestioninventario.modelo.Usuario;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;

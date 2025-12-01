@@ -42,6 +42,31 @@
         </title>
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <c:choose>
+            <c:when test="${vistaDinamica eq 'dashboard'}">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/card.css">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/alert.css">
+            </c:when>
+            <c:when test="${vistaDinamica eq 'inventario' || vistaDinamica eq 'producto-form'}">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/inventario.css">
+            </c:when>
+            <c:when test="${vistaDinamica eq 'proveedores' || vistaDinamica eq 'proveedor-form'}">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/proveedores.css">
+            </c:when>
+            <c:when test="${vistaDinamica eq 'usuarios' || vistaDinamica eq 'usuario-form'}">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/usuarios.css">
+            </c:when>
+            <c:when test="${vistaDinamica eq 'movimientos'}">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/movimientos.css">
+            </c:when>
+            <c:when test="${vistaDinamica eq 'categorias' || vistaDinamica eq 'categoria-form'}">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/categorias.css">
+            </c:when>
+            <c:when test="${vistaDinamica eq 'empresa'}">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/empresa.css">
+            </c:when>
+        </c:choose>
     </head>
     <body>
       <c:choose>

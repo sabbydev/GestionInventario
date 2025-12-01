@@ -114,6 +114,7 @@
                     <th><fmt:message key="col.tipo" bundle="${msg}"/></th>
                     <th><fmt:message key="col.cantidad" bundle="${msg}"/></th>
                     <th><fmt:message key="col.usuario" bundle="${msg}"/></th>
+                    <th><fmt:message key="col.acciones" bundle="${msg}"/></th>
                 </tr>
             </thead>
             <tbody>
@@ -124,6 +125,14 @@
                         <td>${m.tipo}</td>
                         <td>${m.cantidad}</td>
                         <td><c:out value="${m.usuario != null ? m.usuario.nombre : ''}"/></td>
+                        <td>
+                            <form action="${pageContext.request.contextPath}/movimientos/eliminar" method="post" style="display:inline;" onsubmit="return confirm('¿Eliminar este movimiento?');">
+                                <input type="hidden" name="id" value="${m.id}" />
+                                <button type="submit" class="btn-accion" title="<fmt:message key='accion.eliminar' bundle='${msg}'/>">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
