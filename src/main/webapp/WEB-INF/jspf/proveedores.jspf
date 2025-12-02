@@ -39,7 +39,7 @@
                         <a href="${pageContext.request.contextPath}/proveedores/editar?id=${p.id}" class="btn-editar" title="<fmt:message key='accion.editar' bundle='${msg}'/>"><i class="fa fa-pen"></i></a>
                         <form action="${pageContext.request.contextPath}/proveedores/eliminar" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="${p.id}" />
-                            <button type="submit" class="btn-eliminar" title="<fmt:message key='accion.eliminar' bundle='${msg}'/>" style="background:none;border:none;cursor:pointer;">
+                            <button type="submit" class="btn-eliminar" title="<fmt:message key='accion.eliminar' bundle='${msg}'/>">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </form>
