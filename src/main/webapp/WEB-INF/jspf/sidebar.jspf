@@ -67,3 +67,15 @@
     </nav>
 </aside>
 <script src="${pageContext.request.contextPath}/js/header.js" defer></script>
+<script>
+  (function(){
+    var current = window.location.pathname;
+    var links = document.querySelectorAll('.sidebar ul li a');
+    Array.prototype.forEach.call(links, function(a){
+      var href = a.getAttribute('href');
+      if (!href) return;
+      var u = new URL(href, window.location.origin);
+      if (u.pathname === current) a.classList.add('active');
+    });
+  })();
+</script>

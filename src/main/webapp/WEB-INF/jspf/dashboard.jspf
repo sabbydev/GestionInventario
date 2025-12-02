@@ -31,6 +31,7 @@
             <ul class="alert-list">
                 <c:forEach var="a" items="${bajoStockTop}">
                     <li class="alert-item">
+                        <i class="fa fa-exclamation-triangle alert-icon"></i>
                         <span class="alert-title">${a[0]}</span>
                         <span class="alert-value">Stock: ${a[1]}</span>
                         <a href="${pageContext.request.contextPath}/inventario" class="alert-action">Ver</a>

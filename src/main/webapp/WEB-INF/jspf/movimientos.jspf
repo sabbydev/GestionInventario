@@ -85,8 +85,8 @@
         <option value="entrada"><fmt:message key="mov.tipo.entrada" bundle="${msg}"/></option>
         <option value="salida"><fmt:message key="mov.tipo.salida" bundle="${msg}"/></option>
     </select>
-    <button class="btn-accion"><i class="fa fa-search"></i> <fmt:message key="accion.filtrar" bundle="${msg}"/></button>
-    <button class="btn-accion"><i class="fa fa-file-pdf"></i> <fmt:message key="accion.exportarPdf" bundle="${msg}"/></button>
+    <button class="btn-accion" id="btnFiltrarMov"><i class="fa fa-search"></i> <fmt:message key="accion.filtrar" bundle="${msg}"/></button>
+    <button class="btn-accion" id="btnExportarMov"><i class="fa fa-file-pdf"></i> <fmt:message key="accion.exportarPdf" bundle="${msg}"/></button>
 </section>
 
 <!-- === Gráficos === -->
@@ -154,6 +154,39 @@
       tipoSel.addEventListener('change', updateDestino);
       updateDestino();
     }
+  })();
+</script>
+<script>
+  (function(){
+    var btn = document.getElementById('btnFiltrarMov');
+    var fi = document.getElementById('fechaInicio');
+    var ff = document.getElementById('fechaFin');
+    var tipo = document.getElementById('tipoMovimiento');
+    if(btn){ btn.addEventListener('click', function(){
+      var params = new URLSearchParams();
+      if(fi && fi.value) params.set('fechaInicio', fi.value);
+      if(ff && ff.value) params.set('fechaFin', ff.value);
+      if(tipo && tipo.value && tipo.value !== 'todos') params.set('tipo', tipo.value);
+      var url = window.location.pathname + (params.toString() ? ('?' + params.toString()) : '');
+      window.location.assign(url);
+    }); }
+  })();
+</script>
+<script>
+  (function(){
+    var btn = document.getElementById('btnExportarMov');
+    var fi = document.getElementById('fechaInicio');
+    var ff = document.getElementById('fechaFin');
+    var tipo = document.getElementById('tipoMovimiento');
+    if(btn){ btn.addEventListener('click', function(){
+      var params = new URLSearchParams();
+      if(fi && fi.value) params.set('fechaInicio', fi.value);
+      if(ff && ff.value) params.set('fechaFin', ff.value);
+      if(tipo && tipo.value && tipo.value !== 'todos') params.set('tipo', tipo.value);
+      var base = window.location.pathname.endsWith('/movimientos') ? window.location.pathname : (window.location.pathname.replace(/\/?$/, '') + '/movimientos');
+      var url = base + '/exportar' + (params.toString() ? ('?' + params.toString()) : '');
+      window.location.assign(url);
+    }); }
   })();
 </script>
 <script>

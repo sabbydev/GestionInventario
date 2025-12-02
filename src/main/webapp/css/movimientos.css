@@ -92,6 +92,14 @@
     transform: scale(1.03);
 }
 
+/* Botón compacto en el formulario de movimientos */
+.form-movimiento .form-actions .btn-accion {
+    padding: 4px 10px;
+    font-size: 0.85em;
+    height: 32px;
+}
+.form-movimiento .form-actions .btn-accion i { font-size: 0.95em; }
+
 /* --- Gráficos --- */
 .report-container {
     display: flex;
@@ -211,3 +219,95 @@
     }
 }
 
+.form-movimiento {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 12px 14px;
+    margin-top: 8px;
+}
+
+.form-movimiento h2 {
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-mov {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 10px;
+    overflow-x: auto;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-row label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9em;
+}
+.form-row label { min-width: 100px; }
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95em;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-row select {
+    font-size: 0.85em;
+    padding: 4px 8px;
+    height: 32px;
+    width: 100%;
+    max-width: 240px;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    border-color: #62BCAD;
+    box-shadow: 0 0 0 3px rgba(98, 188, 173, 0.15);
+}
+
+#row-destino { /* se mostrará en línea */ }
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+}
+
+@media (max-width: 800px) {
+    .form-mov { flex-wrap: wrap; }
+    .form-actions { justify-content: flex-start; margin-left: 0; }
+}
+
+#id_producto,
+#id_producto_destino { max-width: 320px; }
+#tipo { max-width: 200px; }
+#cantidad { max-width: 140px; }
+
+@media (max-width: 800px) {
+    .form-row select { max-width: 100%; }
+    #id_producto,
+    #id_producto_destino,
+    #tipo,
+    #cantidad { max-width: 100%; }
+}

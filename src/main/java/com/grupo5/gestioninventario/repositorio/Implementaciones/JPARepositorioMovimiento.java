@@ -144,4 +144,58 @@ public class JPARepositorioMovimiento implements IRepositorioMovimiento {
             return res;
         } finally { em.close(); }
     }
+
+    public List<Movimiento> buscar(java.sql.Timestamp desde, java.sql.Timestamp hasta, TipoMovimiento tipo) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "select m from Movimiento m where 1=1 " +
+                    (desde != null ? "and m.fecha >= :desde " : "") +
+                    (hasta != null ? "and m.fecha <= :hasta " : "") +
+                    (tipo != null ? "and m.tipo = :tipo " : "") +
+                    "order by m.fecha desc";
+            var q = em.createQuery(jpql, Movimiento.class);
+            if (desde != null) q.setParameter("desde", desde);
+            if (hasta != null) q.setParameter("hasta", hasta);
+            if (tipo != null) q.setParameter("tipo", tipo);
+            return q.getResultList();
+        } finally { em.close(); }
+    }
+
+    public long contar(TipoMovimiento tipo, java.sql.Timestamp desde, java.sql.Timestamp hasta) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "select count(m) from Movimiento m where 1=1 " +
+                    (tipo != null ? "and m.tipo = :t " : "") +
+                    (desde != null ? "and m.fecha >= :desde " : "") +
+                    (hasta != null ? "and m.fecha <= :hasta " : "");
+            var q = em.createQuery(jpql, Long.class);
+            if (tipo != null) q.setParameter("t", tipo);
+            if (desde != null) q.setParameter("desde", desde);
+            if (hasta != null) q.setParameter("hasta", hasta);
+            return q.getSingleResult();
+        } finally { em.close(); }
+    }
+
+    public Map<Integer, Long> contarPorMesRango(TipoMovimiento tipo, java.sql.Timestamp desde, java.sql.Timestamp hasta) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "select FUNCTION('MONTH', m.fecha), count(m) from Movimiento m where 1=1 " +
+                    (tipo != null ? "and m.tipo = :t " : "") +
+                    (desde != null ? "and m.fecha >= :desde " : "") +
+                    (hasta != null ? "and m.fecha <= :hasta " : "") +
+                    "group by FUNCTION('MONTH', m.fecha) order by FUNCTION('MONTH', m.fecha)";
+            var q = em.createQuery(jpql, Object[].class);
+            if (tipo != null) q.setParameter("t", tipo);
+            if (desde != null) q.setParameter("desde", desde);
+            if (hasta != null) q.setParameter("hasta", hasta);
+            List<Object[]> rows = q.getResultList();
+            Map<Integer, Long> res = new LinkedHashMap<>();
+            for (Object[] r : rows) {
+                Integer mes = ((Number) r[0]).intValue();
+                Long cnt = ((Number) r[1]).longValue();
+                res.put(mes, cnt);
+            }
+            return res;
+        } finally { em.close(); }
+    }
 }

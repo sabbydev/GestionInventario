@@ -54,6 +54,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   padding-left: 1.3rem;
 }
 
+.sidebar ul li a.active {
+  background: #f0ad4e;
+  color: #043d3c;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
 

@@ -45,31 +45,51 @@ public class MovimientosServlet extends HttpServlet {
             return;
         }
 
+        String fi = request.getParameter("fechaInicio");
+        String ff = request.getParameter("fechaFin");
+        String tipoParam = request.getParameter("tipo");
+        java.sql.Timestamp desde = null;
+        java.sql.Timestamp hasta = null;
+        try { if (fi != null && !fi.isBlank()) desde = java.sql.Timestamp.valueOf(fi + " 00:00:00"); } catch (Exception ignored) {}
+        try { if (ff != null && !ff.isBlank()) hasta = java.sql.Timestamp.valueOf(ff + " 23:59:59"); } catch (Exception ignored) {}
+        TipoMovimiento tipoFiltro = null;
+        if (tipoParam != null) {
+            if ("entrada".equalsIgnoreCase(tipoParam)) tipoFiltro = TipoMovimiento.entrada;
+            else if ("salida".equalsIgnoreCase(tipoParam)) tipoFiltro = TipoMovimiento.salida;
+            else if ("transferencia".equalsIgnoreCase(tipoParam)) tipoFiltro = TipoMovimiento.transferencia;
+        }
+
         request.setAttribute("vistaDinamica", "movimientos");
-        request.setAttribute("resumenEntradas", repoMovimiento.contarEntradas());
-        request.setAttribute("resumenSalidas", repoMovimiento.contarSalidas());
-        request.setAttribute("resumenTotal", repoMovimiento.contarTotal());
-        request.setAttribute("movimientos", repoMovimiento.ultimos(50));
         request.setAttribute("productos", repoProducto.findAll());
 
-        java.time.LocalDate now = java.time.LocalDate.now();
-        int year = now.getYear();
-        java.util.Map<Integer, Long> entradasMes = repoMovimiento.contarPorMes(TipoMovimiento.entrada, year);
-        java.util.Map<Integer, Long> salidasMes = repoMovimiento.contarPorMes(TipoMovimiento.salida, year);
+        long entradasCnt = ((JPARepositorioMovimiento) repoMovimiento).contar(TipoMovimiento.entrada, desde, hasta);
+        long salidasCnt = ((JPARepositorioMovimiento) repoMovimiento).contar(TipoMovimiento.salida, desde, hasta);
+        long totalCnt = ((JPARepositorioMovimiento) repoMovimiento).contar(null, desde, hasta);
+        request.setAttribute("resumenEntradas", entradasCnt);
+        request.setAttribute("resumenSalidas", salidasCnt);
+        request.setAttribute("resumenTotal", totalCnt);
+
+        java.util.List<com.grupo5.gestioninventario.modelo.Movimiento> lista = ((JPARepositorioMovimiento) repoMovimiento).buscar(desde, hasta, tipoFiltro);
+        if (lista.size() > 50) lista = lista.subList(0, 50);
+        request.setAttribute("movimientos", lista);
+
+        java.util.Map<Integer, Long> entradasMes = ((JPARepositorioMovimiento) repoMovimiento).contarPorMesRango(TipoMovimiento.entrada, desde, hasta);
+        java.util.Map<Integer, Long> salidasMes = ((JPARepositorioMovimiento) repoMovimiento).contarPorMesRango(TipoMovimiento.salida, desde, hasta);
         String[] etiquetas = {"'Ene'","'Feb'","'Mar'","'Abr'","'May'","'Jun'","'Jul'","'Ago'","'Sep'","'Oct'","'Nov'","'Dic'"};
         StringBuilder ent = new StringBuilder();
         StringBuilder sal = new StringBuilder();
         for (int i = 1; i <= 12; i++) {
             ent.append(entradasMes.getOrDefault(i, 0L));
+            if (i < 12) ent.append(",");
             sal.append(salidasMes.getOrDefault(i, 0L));
-            if (i < 12) { ent.append(","); sal.append(","); }
+            if (i < 12) sal.append(",");
         }
-        StringBuilder labs = new StringBuilder();
+        StringBuilder lbl = new StringBuilder();
         for (int i = 0; i < etiquetas.length; i++) {
-            labs.append(etiquetas[i]);
-            if (i < etiquetas.length - 1) labs.append(",");
+            lbl.append(etiquetas[i]);
+            if (i < etiquetas.length - 1) lbl.append(",");
         }
-        request.setAttribute("labelsMeses", labs.toString());
+        request.setAttribute("labelsMeses", lbl.toString());
         request.setAttribute("dataEntradasMes", ent.toString());
         request.setAttribute("dataSalidasMes", sal.toString());
 

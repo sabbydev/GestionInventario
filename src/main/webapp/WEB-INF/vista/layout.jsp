@@ -69,6 +69,15 @@
         </c:choose>
     </head>
     <body>
+      <div id="alertModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <button type="button" class="modal-close">×</button>
+          <div class="modal-body">
+            <h3 id="alertTitle">Aviso</h3>
+            <ul id="alertList" class="modal-list"></ul>
+          </div>
+        </div>
+      </div>
       <c:choose>
         <c:when test="${sessionScope.layoutVersion eq 'v1'}">
           <aside id="sidebar"><%@ include file="/WEB-INF/jspf/sidebar.jspf" %></aside>
@@ -81,12 +90,8 @@
                   if (flashSuccess != null) { request.setAttribute("flashSuccess", flashSuccess); session.removeAttribute("flashSuccess"); }
                   if (flashError != null) { request.setAttribute("flashError", flashError); session.removeAttribute("flashError"); }
                 %>
-                <c:if test="${not empty flashSuccess}">
-                    <div class="alert success">${flashSuccess}</div>
-                </c:if>
-                <c:if test="${not empty flashError}">
-                    <div class="alert error">${flashError}</div>
-                </c:if>
+                <c:if test="${not empty flashSuccess}"><div class="alert success" style="display:none;">${flashSuccess}</div></c:if>
+                <c:if test="${not empty flashError}"><div class="alert error" style="display:none;">${flashError}</div></c:if>
                 <c:if test="${not empty vistaDinamica}">
                     <%@ include file="/WEB-INF/jspf/contenido-dinamico.jspf" %>
                 </c:if>
@@ -109,5 +114,35 @@
           </div>
         </c:otherwise>
       </c:choose>
+      <script>
+        (function(){
+          var modal = document.getElementById('alertModal');
+          var list = document.getElementById('alertList');
+          var title = document.getElementById('alertTitle');
+          var closeBtn = modal ? modal.querySelector('.modal-close') : null;
+          function open(items){
+            while(list.firstChild) list.removeChild(list.firstChild);
+            items.forEach(function(it){
+              var li = document.createElement('li');
+              li.textContent = it.text;
+              li.className = it.type ? ('item ' + it.type) : 'item';
+              list.appendChild(li);
+            });
+            modal.style.display = 'flex';
+          }
+          function close(){ modal.style.display = 'none'; }
+          document.addEventListener('click', function(e){ if (modal && e.target === modal) close(); });
+          if (closeBtn) closeBtn.addEventListener('click', close);
+          document.addEventListener('DOMContentLoaded', function(){
+            var alerts = Array.prototype.slice.call(document.querySelectorAll('#main .alert'));
+            var items = alerts.map(function(a){
+              var t = a.classList.contains('error') ? 'error' : (a.classList.contains('success') ? 'success' : 'info');
+              return { type: t, text: a.textContent.trim() };
+            }).filter(function(it){ return it.text.length > 0; });
+            alerts.forEach(function(a){ a.parentNode && a.parentNode.removeChild(a); });
+            if (items.length > 0) open(items);
+          });
+        })();
+      </script>
     </body>
 </html>

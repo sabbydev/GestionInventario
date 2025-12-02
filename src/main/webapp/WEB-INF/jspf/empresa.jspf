@@ -6,39 +6,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <section class="form-container">
-    <form class="form-empresa">
+    <c:if test="${not empty exitoEmpresa}">
+        <div class="alert success">${exitoEmpresa}</div>
+    </c:if>
+    <form class="form-empresa" action="${pageContext.request.contextPath}/empresa" method="post" accept-charset="UTF-8">
         <div class="form-group">
             <label for="nombre">Nombre de la Empresa:</label>
-            <input type="text" id="nombre" value="Autorepuestos Perú SAC" readonly>
+            <input type="text" id="nombre" name="nombre" value="${empresa != null ? empresa.nombre : ''}" readonly>
         </div>
 
         <div class="form-group">
             <label for="ruc">RUC:</label>
-            <input type="text" id="ruc" value="20568472910" readonly>
+            <input type="text" id="ruc" name="ruc" value="${empresa != null ? empresa.ruc : ''}" readonly>
         </div>
 
         <div class="form-group">
             <label for="direccion">Dirección:</label>
-            <textarea id="direccion" rows="2" readonly>Av. la Paz - Lima - Peru</textarea>
+            <textarea id="direccion" name="direccion" rows="2" readonly>${empresa != null ? empresa.direccion : ''}</textarea>
         </div>
 
         <div class="form-group">
             <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" value="(01) 457-8219" readonly>
+            <input type="text" id="telefono" name="telefono" value="${empresa != null ? empresa.telefono : ''}" readonly>
         </div>
 
         <div class="form-group">
             <label for="correo">Correo:</label>
-            <input type="email" id="correo" value="contacto@autorepuestos.pe" readonly>
+            <input type="email" id="correo" name="correo" value="${empresa != null ? empresa.correo : ''}" readonly>
         </div>
 
         <div class="form-group">
             <label for="representante">Representante Legal:</label>
-            <input type="text" id="representante" value="Autorepuestos Perú SAC" readonly>
+            <input type="text" id="representante" name="representante" value="${empresa != null ? empresa.representante : ''}" readonly>
         </div>
 
         <div class="form-group botones">
-            <button type="button" class="btn-editar"><i class="fa fa-pen"></i> Editar Información</button>
+            <button type="button" class="btn-editar" id="btnEditarEmpresa"><i class="fa fa-pen"></i> Editar Información</button>
+            <button type="submit" class="btn-editar" id="btnGuardarEmpresa" style="display:none;"><i class="fa fa-save"></i> Guardar Cambios</button>
         </div>
     </form>
 </section>
+<script>
+  (function(){
+    var editar = document.getElementById('btnEditarEmpresa');
+    var guardar = document.getElementById('btnGuardarEmpresa');
+    var campos = ['nombre','ruc','direccion','telefono','correo','representante']
+      .map(function(id){ return document.getElementById(id); });
+    if (editar) {
+      editar.addEventListener('click', function(){
+        campos.forEach(function(el){ if(el){ el.removeAttribute('readonly'); }});
+        editar.style.display = 'none';
+        guardar.style.display = 'inline-block';
+      });
+    }
+  })();
+</script>

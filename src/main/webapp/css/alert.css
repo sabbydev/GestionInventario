@@ -16,3 +16,70 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   margin-bottom: 0.5rem;
   color: #fff;
 }
+
+.alert-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.alert-item {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 6px solid #e74c3c;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.alert-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}
+
+.alert-icon {
+  color: #e74c3c;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.alert-title {
+  color: #043d3c;
+  font-weight: 700;
+  flex: 1;
+}
+
+.alert-value {
+  margin: 0 10px;
+  color: #842029;
+  background: #fdecea;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.alert-action {
+  text-decoration: none;
+  background: #0b5ed7;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.alert-action:hover {
+  background: #094fb6;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .alert-item { flex-wrap: wrap; gap: 8px; }
+  .alert-title { width: 100%; }
+}
