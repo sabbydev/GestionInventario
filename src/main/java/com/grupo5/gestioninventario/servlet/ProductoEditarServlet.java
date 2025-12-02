@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @WebServlet("/productos/editar")
