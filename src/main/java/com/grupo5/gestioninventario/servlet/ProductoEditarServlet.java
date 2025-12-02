@@ -48,6 +48,10 @@ public class ProductoEditarServlet extends HttpServlet {
             return;
         }
         String idStr = request.getParameter("id");
+        if (idStr == null || idStr.isBlank()) {
+            response.sendRedirect(request.getContextPath() + "/inventario");
+            return;
+        }
         Optional<Producto> op = repoProducto.findById(Integer.valueOf(idStr));
         if (op.isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/inventario");
@@ -68,13 +72,39 @@ public class ProductoEditarServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login?error=sesion");
             return;
         }
-        Integer id = Integer.valueOf(request.getParameter("id"));
+        String idParam = request.getParameter("id");
+        if (idParam == null || idParam.isBlank()) {
+            response.sendRedirect(request.getContextPath() + "/inventario");
+            return;
+        }
+        Integer id = Integer.valueOf(idParam);
         String nombre = request.getParameter("nombre");
         String descripcion = request.getParameter("descripcion");
         String precioStr = request.getParameter("precio");
         String stockStr = request.getParameter("stock");
         String categoriaIdStr = request.getParameter("id_categoria");
         String proveedorIdStr = request.getParameter("id_proveedor");
+
+        String error = null;
+        java.math.BigDecimal precio = null;
+        Integer stock = null;
+        if (nombre == null || nombre.isBlank()) {
+            error = "Nombre requerido";
+        }
+        if (error == null) {
+            if (precioStr == null || precioStr.isBlank()) {
+                error = "Precio requerido";
+            } else {
+                try { precio = new java.math.BigDecimal(precioStr); } catch (RuntimeException ex) { error = "Precio inválido"; }
+            }
+        }
+        if (error == null) {
+            if (stockStr == null || stockStr.isBlank()) {
+                error = "Stock requerido";
+            } else {
+                try { stock = Integer.valueOf(stockStr); } catch (RuntimeException ex) { error = "Stock inválido"; }
+            }
+        }
 
         Optional<Producto> op = repoProducto.findById(id);
         if (op.isEmpty()) {
@@ -84,8 +114,17 @@ public class ProductoEditarServlet extends HttpServlet {
         Producto p = op.get();
         p.setNombre(nombre);
         p.setDescripcion(descripcion);
-        p.setPrecio(new BigDecimal(precioStr));
-        p.setStock(Integer.valueOf(stockStr));
+        if (error != null) {
+            request.setAttribute("flashError", error);
+            request.setAttribute("producto", p);
+            request.setAttribute("categorias", repoCategoria.findAll());
+            request.setAttribute("proveedores", repoProveedor.findAll());
+            request.setAttribute("vistaDinamica", "producto-form");
+            request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
+            return;
+        }
+        p.setPrecio(precio);
+        p.setStock(stock);
         if (categoriaIdStr != null && !categoriaIdStr.isBlank()) {
             Optional<Categoria> oc = repoCategoria.findById(Integer.valueOf(categoriaIdStr));
             p.setCategoria(oc.orElse(null));
@@ -98,30 +137,46 @@ public class ProductoEditarServlet extends HttpServlet {
         } else {
             p.setProveedor(null);
         }
-        String uploadDir = getServletContext().getRealPath("/uploads");
-        java.nio.file.Path dir = java.nio.file.Paths.get(uploadDir);
+        String uploadDirReal = getServletContext().getRealPath("/uploads");
+        java.nio.file.Path dir;
+        if (uploadDirReal == null) {
+            dir = java.nio.file.Paths.get(System.getProperty("java.io.tmpdir"), "uploads");
+        } else {
+            dir = java.nio.file.Paths.get(uploadDirReal);
+        }
         try { java.nio.file.Files.createDirectories(dir); } catch (IOException ignored) {}
 
         Part imgPart = request.getPart("imagen");
         if (imgPart != null && imgPart.getSize() > 0) {
-            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
-            java.nio.file.Path pth = dir.resolve(fn);
-            imgPart.write(pth.toString());
-            p.setImagenUrl(request.getContextPath() + "/uploads/" + fn);
+            String ct = imgPart.getContentType();
+            if (ct != null && ct.startsWith("image/")) {
+                try (java.io.InputStream is = imgPart.getInputStream()) {
+                    byte[] data = is.readAllBytes();
+                    p.setImagenData(data);
+                    p.setImagenMime(ct);
+                    p.setImagenUrl(null);
+                }
+            }
         }
         Part fichaPart = request.getPart("ficha");
         if (fichaPart != null && fichaPart.getSize() > 0) {
-            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(fichaPart.getSubmittedFileName()).getFileName().toString();
-            java.nio.file.Path pth = dir.resolve(fn);
-            fichaPart.write(pth.toString());
-            p.setFichaTecnicaUrl(request.getContextPath() + "/uploads/" + fn);
+            String ct = fichaPart.getContentType();
+            if (ct != null && ct.equals("application/pdf")) {
+                String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(fichaPart.getSubmittedFileName()).getFileName().toString();
+                java.nio.file.Path pth = dir.resolve(fn);
+                fichaPart.write(pth.toString());
+                p.setFichaTecnicaUrl(request.getContextPath() + "/uploads/" + fn);
+            }
         }
         Part manualPart = request.getPart("manual");
         if (manualPart != null && manualPart.getSize() > 0) {
-            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(manualPart.getSubmittedFileName()).getFileName().toString();
-            java.nio.file.Path pth = dir.resolve(fn);
-            manualPart.write(pth.toString());
-            p.setManualUrl(request.getContextPath() + "/uploads/" + fn);
+            String ct = manualPart.getContentType();
+            if (ct != null && ct.equals("application/pdf")) {
+                String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(manualPart.getSubmittedFileName()).getFileName().toString();
+                java.nio.file.Path pth = dir.resolve(fn);
+                manualPart.write(pth.toString());
+                p.setManualUrl(request.getContextPath() + "/uploads/" + fn);
+            }
         }
 
         repoProducto.update(p);

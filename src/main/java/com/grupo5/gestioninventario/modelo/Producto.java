@@ -35,6 +35,14 @@ public class Producto {
     @Column(name = "imagen_url")
     private String imagenUrl;
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "imagen_data")
+    private byte[] imagenData;
+
+    @Column(name = "imagen_mime", length = 100)
+    private String imagenMime;
+
     @Column(name = "ficha_tecnica_url")
     private String fichaTecnicaUrl;
 
@@ -64,6 +72,10 @@ public class Producto {
 
     public String getImagenUrl() { return imagenUrl; }
     public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
+    public byte[] getImagenData() { return imagenData; }
+    public void setImagenData(byte[] imagenData) { this.imagenData = imagenData; }
+    public String getImagenMime() { return imagenMime; }
+    public void setImagenMime(String imagenMime) { this.imagenMime = imagenMime; }
     public String getFichaTecnicaUrl() { return fichaTecnicaUrl; }
     public void setFichaTecnicaUrl(String fichaTecnicaUrl) { this.fichaTecnicaUrl = fichaTecnicaUrl; }
     public String getManualUrl() { return manualUrl; }

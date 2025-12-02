@@ -43,7 +43,7 @@
                     <td>S/. ${p.precio}</td>
                     <td>${p.stock}</td>
                     <td>
-                      <c:if test="${not empty p.imagenUrl}"><a href="${p.imagenUrl}" target="_blank" title="Imagen"><i class="fa fa-image"></i></a></c:if>
+                      <c:if test="${p.imagenData != null || not empty p.imagenUrl}"><a href="#" class="doc-image" data-img-url="${pageContext.request.contextPath}/api/productos/documento?id=${p.id}&tipo=imagen" title="Imagen"><i class="fa fa-image"></i></a></c:if>
                       <c:if test="${not empty p.fichaTecnicaUrl}"><a href="${p.fichaTecnicaUrl}" target="_blank" title="Ficha"><i class="fa fa-file-pdf"></i></a></c:if>
                       <c:if test="${not empty p.manualUrl}"><a href="${p.manualUrl}" target="_blank" title="Manual"><i class="fa fa-book"></i></a></c:if>
                     </td>
@@ -60,6 +60,27 @@
             </c:forEach>
         </tbody>
     </table>
+    <div id="imageModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <button type="button" class="modal-close">×</button>
+        <img id="modalImage" class="modal-image" src="" alt="imagen" />
+      </div>
+    </div>
+    <script>
+      (function(){
+        var modal = document.getElementById('imageModal');
+        var img = document.getElementById('modalImage');
+        var closeBtn = modal ? modal.querySelector('.modal-close') : null;
+        function open(src){ img.src = src; modal.style.display='flex'; }
+        function close(){ modal.style.display='none'; img.src=''; }
+        document.addEventListener('click', function(e){
+          var a = e.target.closest('a.doc-image');
+          if(a){ e.preventDefault(); var src = a.getAttribute('data-img-url'); if(src){ open(src); } }
+          if(modal && e.target === modal){ close(); }
+        });
+        if(closeBtn){ closeBtn.addEventListener('click', function(){ close(); }); }
+      })();
+    </script>
     <div class="paginacion">
         <c:if test="${pages > 1}">
             <a href="${pageContext.request.contextPath}/inventario?q=${q}&page=${page > 1 ? page - 1 : 1}&size=${size}"><fmt:message key="paginacion.anterior" bundle="${msg}"/></a>

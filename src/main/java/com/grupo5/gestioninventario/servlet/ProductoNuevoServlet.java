@@ -133,10 +133,15 @@ public class ProductoNuevoServlet extends HttpServlet {
 
         Part imgPart = request.getPart("imagen");
         if (imgPart != null && imgPart.getSize() > 0) {
-            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
-            java.nio.file.Path pth = dir.resolve(fn);
-            imgPart.write(pth.toString());
-            p.setImagenUrl(request.getContextPath() + "/uploads/" + fn);
+            String ct = imgPart.getContentType();
+            if (ct != null && ct.startsWith("image/")) {
+                try (java.io.InputStream is = imgPart.getInputStream()) {
+                    byte[] data = is.readAllBytes();
+                    p.setImagenData(data);
+                    p.setImagenMime(ct);
+                    p.setImagenUrl(null);
+                }
+            }
         }
         Part fichaPart = request.getPart("ficha");
         if (fichaPart != null && fichaPart.getSize() > 0) {
