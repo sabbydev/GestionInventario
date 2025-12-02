@@ -37,6 +37,9 @@
   <c:when test="${vistaDinamica eq 'proveedor-form'}">
       <%@ include file="/WEB-INF/jspf/proveedor-form.jspf" %>
   </c:when>
+  <c:when test="${vistaDinamica eq 'acceso-denegado'}">
+      <%@ include file="/WEB-INF/jspf/acceso-denegado.jspf" %>
+  </c:when>
   <c:otherwise>
       <h2>Página no encontrada</h2>
   </c:otherwise>

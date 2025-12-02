@@ -145,17 +145,27 @@ public class ProductoNuevoServlet extends HttpServlet {
         }
         Part fichaPart = request.getPart("ficha");
         if (fichaPart != null && fichaPart.getSize() > 0) {
-            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(fichaPart.getSubmittedFileName()).getFileName().toString();
-            java.nio.file.Path pth = dir.resolve(fn);
-            fichaPart.write(pth.toString());
-            p.setFichaTecnicaUrl(request.getContextPath() + "/uploads/" + fn);
+            String ct = fichaPart.getContentType();
+            if (ct != null && ct.equals("application/pdf")) {
+                try (java.io.InputStream is = fichaPart.getInputStream()) {
+                    byte[] data = is.readAllBytes();
+                    p.setFichaTecnicaData(data);
+                    p.setFichaTecnicaMime(ct);
+                    p.setFichaTecnicaUrl(null);
+                }
+            }
         }
         Part manualPart = request.getPart("manual");
         if (manualPart != null && manualPart.getSize() > 0) {
-            String fn = java.util.UUID.randomUUID() + "-" + java.nio.file.Paths.get(manualPart.getSubmittedFileName()).getFileName().toString();
-            java.nio.file.Path pth = dir.resolve(fn);
-            manualPart.write(pth.toString());
-            p.setManualUrl(request.getContextPath() + "/uploads/" + fn);
+            String ct = manualPart.getContentType();
+            if (ct != null && ct.equals("application/pdf")) {
+                try (java.io.InputStream is = manualPart.getInputStream()) {
+                    byte[] data = is.readAllBytes();
+                    p.setManualData(data);
+                    p.setManualMime(ct);
+                    p.setManualUrl(null);
+                }
+            }
         }
 
         repoProducto.save(p);

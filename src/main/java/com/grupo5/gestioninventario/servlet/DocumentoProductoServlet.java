@@ -62,6 +62,24 @@ public class DocumentoProductoServlet extends HttpServlet {
                 response.getOutputStream().write(p.getImagenData());
                 return;
             }
+        } else if ("ficha".equals(tipo)) {
+            if (p.getFichaTecnicaData() != null) {
+                String ct = p.getFichaTecnicaMime() != null ? p.getFichaTecnicaMime() : "application/pdf";
+                response.setContentType(ct);
+                response.setHeader("Cache-Control", "private, max-age=120");
+                response.setContentLength(p.getFichaTecnicaData().length);
+                response.getOutputStream().write(p.getFichaTecnicaData());
+                return;
+            }
+        } else if ("manual".equals(tipo)) {
+            if (p.getManualData() != null) {
+                String ct = p.getManualMime() != null ? p.getManualMime() : "application/pdf";
+                response.setContentType(ct);
+                response.setHeader("Cache-Control", "private, max-age=120");
+                response.setContentLength(p.getManualData().length);
+                response.getOutputStream().write(p.getManualData());
+                return;
+            }
         }
 
         String url;

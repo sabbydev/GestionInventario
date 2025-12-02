@@ -44,8 +44,8 @@
                     <td>${p.stock}</td>
                     <td>
                       <c:if test="${p.imagenData != null || not empty p.imagenUrl}"><a href="#" class="doc-image" data-img-url="${pageContext.request.contextPath}/api/productos/documento?id=${p.id}&tipo=imagen" title="Imagen"><i class="fa fa-image"></i></a></c:if>
-                      <c:if test="${not empty p.fichaTecnicaUrl}"><a href="${p.fichaTecnicaUrl}" target="_blank" title="Ficha"><i class="fa fa-file-pdf"></i></a></c:if>
-                      <c:if test="${not empty p.manualUrl}"><a href="${p.manualUrl}" target="_blank" title="Manual"><i class="fa fa-book"></i></a></c:if>
+                      <c:if test="${p.fichaTecnicaData != null || not empty p.fichaTecnicaUrl}"><a href="#" class="doc-pdf" data-pdf-url="${pageContext.request.contextPath}/api/productos/documento?id=${p.id}&tipo=ficha" title="Ficha"><i class="fa fa-file-pdf"></i></a></c:if>
+                      <c:if test="${p.manualData != null || not empty p.manualUrl}"><a href="#" class="doc-pdf" data-pdf-url="${pageContext.request.contextPath}/api/productos/documento?id=${p.id}&tipo=manual" title="Manual"><i class="fa fa-book"></i></a></c:if>
                     </td>
                     <td class="actions">
                         <a href="${pageContext.request.contextPath}/productos/editar?id=${p.id}" class="edit" title="<fmt:message key='accion.editar' bundle='${msg}'/>"><i class="fa fa-edit"></i></a>
@@ -66,6 +66,12 @@
         <img id="modalImage" class="modal-image" src="" alt="imagen" />
       </div>
     </div>
+    <div id="pdfModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <button type="button" class="modal-close">×</button>
+        <iframe id="modalPdf" class="modal-iframe" src="" title="pdf" frameborder="0"></iframe>
+      </div>
+    </div>
     <script>
       (function(){
         var modal = document.getElementById('imageModal');
@@ -76,6 +82,19 @@
         document.addEventListener('click', function(e){
           var a = e.target.closest('a.doc-image');
           if(a){ e.preventDefault(); var src = a.getAttribute('data-img-url'); if(src){ open(src); } }
+          if(modal && e.target === modal){ close(); }
+        });
+        if(closeBtn){ closeBtn.addEventListener('click', function(){ close(); }); }
+      })();
+      (function(){
+        var modal = document.getElementById('pdfModal');
+        var iframe = document.getElementById('modalPdf');
+        var closeBtn = modal ? modal.querySelector('.modal-close') : null;
+        function open(src){ iframe.src = src; modal.style.display='flex'; }
+        function close(){ modal.style.display='none'; iframe.src=''; }
+        document.addEventListener('click', function(e){
+          var a = e.target.closest('a.doc-pdf');
+          if(a){ e.preventDefault(); var src = a.getAttribute('data-pdf-url'); if(src){ open(src); } }
           if(modal && e.target === modal){ close(); }
         });
         if(closeBtn){ closeBtn.addEventListener('click', function(){ close(); }); }

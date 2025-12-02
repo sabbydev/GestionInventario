@@ -47,7 +47,14 @@ public class AutorizacionFilter implements Filter {
         }
 
         if (!permitido) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            String accept = request.getHeader("Accept");
+            boolean html = accept != null && accept.contains("text/html");
+            if (html) {
+                request.setAttribute("vistaDinamica", "acceso-denegado");
+                request.getRequestDispatcher("/WEB-INF/vista/layout.jsp").forward(request, response);
+            } else {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
             return;
         }
 

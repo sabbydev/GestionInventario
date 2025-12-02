@@ -46,8 +46,24 @@ public class Producto {
     @Column(name = "ficha_tecnica_url")
     private String fichaTecnicaUrl;
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "ficha_tecnica_data")
+    private byte[] fichaTecnicaData;
+
+    @Column(name = "ficha_tecnica_mime", length = 100)
+    private String fichaTecnicaMime;
+
     @Column(name = "manual_url")
     private String manualUrl;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "manual_data")
+    private byte[] manualData;
+
+    @Column(name = "manual_mime", length = 100)
+    private String manualMime;
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -78,6 +94,14 @@ public class Producto {
     public void setImagenMime(String imagenMime) { this.imagenMime = imagenMime; }
     public String getFichaTecnicaUrl() { return fichaTecnicaUrl; }
     public void setFichaTecnicaUrl(String fichaTecnicaUrl) { this.fichaTecnicaUrl = fichaTecnicaUrl; }
+    public byte[] getFichaTecnicaData() { return fichaTecnicaData; }
+    public void setFichaTecnicaData(byte[] fichaTecnicaData) { this.fichaTecnicaData = fichaTecnicaData; }
+    public String getFichaTecnicaMime() { return fichaTecnicaMime; }
+    public void setFichaTecnicaMime(String fichaTecnicaMime) { this.fichaTecnicaMime = fichaTecnicaMime; }
     public String getManualUrl() { return manualUrl; }
     public void setManualUrl(String manualUrl) { this.manualUrl = manualUrl; }
+    public byte[] getManualData() { return manualData; }
+    public void setManualData(byte[] manualData) { this.manualData = manualData; }
+    public String getManualMime() { return manualMime; }
+    public void setManualMime(String manualMime) { this.manualMime = manualMime; }
 }

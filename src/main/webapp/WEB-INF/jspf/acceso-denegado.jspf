@@ -1,0 +1,16 @@
+<%@ page pageEncoding="UTF-8" %>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+  <title>Acceso denegado</title>
+</head>
+<section class="inventory-table">
+  <h2><i class="fa fa-lock"></i> Acceso denegado</h2>
+  <p>No tienes permisos para acceder a esta página.</p>
+  <p>
+    <a href="${pageContext.request.contextPath}/" class="btn-add">
+      <i class="fa fa-home"></i> Ir al inicio
+    </a>
+  </p>
+  <p>Si necesitas acceso, contacta al administrador.</p>
+  </section>

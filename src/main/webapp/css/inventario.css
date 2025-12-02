@@ -114,6 +114,13 @@
   display: block;
 }
 
+.modal-iframe {
+  width: 78vw;
+  height: 70vh;
+  border: none;
+  background: #f8f8f8;
+}
+
 .modal-close {
   position: absolute;
   top: 8px;
